@@ -1,4 +1,6 @@
 # NativeScript-RadioButton
+[![npm](https://img.shields.io/npm/v/nativescript-radiobutton.svg)](https://www.npmjs.com/package/nativescript-radiobutton)
+[![npm](https://img.shields.io/npm/dt/nativescript-radiobutton.svg?label=npm%20downloads)](https://www.npmjs.com/package/nativescript-radiobutton)
 
 A NativeScript plugin for the native radiogroup and radiobutton widget.
 
@@ -31,6 +33,7 @@ registerElement("RadioButton", () => require("nativescript-radiobutton").RadioBu
 
 ```
 
+Place this in your view.
 
 ```html
 <StackLayout>
