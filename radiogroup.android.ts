@@ -8,7 +8,7 @@ import { Font } from "ui/styling/font";
 import enums = require("ui/enums");
 import style = require("ui/styling/style");
 import app = require("application");
-import { android } from "tns-platform-declarations/android"
+declare let android: any;
 
 export class RadioGroup extends View implements RadioGroupInterface {
 
