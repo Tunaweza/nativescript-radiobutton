@@ -8,9 +8,10 @@ import { Font } from "ui/styling/font";
 import enums = require("ui/enums");
 import style = require("ui/styling/style");
 import app = require("application");
+import { StackLayout } from 'ui/layouts/stack-layout';
 declare let android: any;
 
-export class RadioGroup extends View implements RadioGroupInterface {
+export class RadioGroup extends StackLayout implements RadioGroupInterface {
 
     private _android: any; /// android.widget.RadioGroup
     public _fillColor: string;

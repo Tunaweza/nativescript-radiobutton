@@ -22,11 +22,9 @@ From your command prompt/terminal go to your app's root folder and execute:
 ```html
 <StackLayout>
     <RadioGroup>
-        <StackLayout>
-            <RadioButton text="Selection 1"></RadioButton>
-            <RadioButton text="Selection 2"></RadioButton>
-            <RadioButton text="Selection 3"></RadioButton>
-        </StackLayout>
+        <RadioButton text="Selection 1"></RadioButton>
+        <RadioButton text="Selection 2"></RadioButton>
+        <RadioButton text="Selection 3"></RadioButton>
     </RadioGroup>
 </StackLayout>
 ```
