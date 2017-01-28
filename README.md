@@ -14,6 +14,11 @@ From your command prompt/terminal go to your app's root folder and execute:
 `tns plugin add nativescript-radiobutton`
 
 
+
+## Useage
+
+### Angular
+
 ```html
 <StackLayout>
     <RadioGroup>
