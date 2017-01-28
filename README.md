@@ -19,8 +19,9 @@ From your command prompt/terminal go to your app's root folder and execute:
 
 ### Angular
 
-```component
+Place this at the top of your component.
 
+```typescript
 import { registerElement } from "nativescript-angular/element-registry";
 import { CheckBox } from 'nativescript-checkbox';
 registerElement("CheckBox", () => require("nativescript-checkbox").CheckBox);
