@@ -5,8 +5,8 @@ A NativeScript plugin for the native radiogroup and radiobutton widget.
 #### Platform controls used:
 Android |   iOS
 ---------- | -------
-[Android CheckBox](https://developer.android.com/reference/android/widget/RadioGoupe.html) | NONE
-[Android CheckBox](https://developer.android.com/reference/android/widget/RadioButton.html) | NONE
+[Android RadioGroup](https://developer.android.com/reference/android/widget/RadioGroup.html) | NONE
+[Android RadioButton](https://developer.android.com/reference/android/widget/RadioButton.html) | NONE
 
 ## Installation
 From your command prompt/terminal go to your app's root folder and execute:
