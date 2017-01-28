@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "removeComments": true,
+    "experimentalDecorators": true,
+    "sourceMap": false,
+    "noEmitHelpers": true,
+    "noEmitOnError": false
+  },
+  "exclude": [
+    "node_modules",
+    "platforms",
+    "**/*.aot.ts"
+  ],
+  "compileOnSave": false
+}

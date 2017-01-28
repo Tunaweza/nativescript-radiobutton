@@ -1,0 +1,22 @@
+{
+  "name": "nativescript-radiobutton",
+  "version": "0.0.1",
+  "main": "radiogroup",
+  "license": "Apache 2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tunaweza/nativescript-radiobutton"
+  },
+  "description": "A plugin for nativescript that exposes the radiogroup and radiobutton native view elements."
+  "nativescript": {
+    "platforms": {
+      "android": "2.4.0"
+    }
+  },
+  "devDependencies": {
+    "tns-platform-declarations": "^2.0.0",
+    "tns-core-modules": "^2.4.4"
+  },
+  "dependencies": {
+  }
+}
