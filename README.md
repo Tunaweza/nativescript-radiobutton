@@ -23,8 +23,6 @@ Place this at the top of your component.
 
 ```typescript
 import { registerElement } from "nativescript-angular/element-registry";
-import { CheckBox } from 'nativescript-checkbox';
-registerElement("CheckBox", () => require("nativescript-checkbox").CheckBox);
 import { RadioGroup, RadioButton } from 'nativescript-radiobutton';
 registerElement("RadioGroup", () => require("nativescript-radiobutton").RadioGroup);
 registerElement("RadioButton", () => require("nativescript-radiobutton").RadioButton );
