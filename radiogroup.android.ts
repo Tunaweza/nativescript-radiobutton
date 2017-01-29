@@ -111,6 +111,11 @@ export class RadioButton extends View implements RadioButtonInterface {
         "RadioButton",
         new PropertyMetadata(false)
     );
+    public static enabledProperty = new Property(
+        "enabled",
+        "RadioButton",
+        new PropertyMetadata(false)
+    );
 
     public static textProperty = new Property(
         "text",
@@ -187,6 +192,14 @@ export class RadioButton extends View implements RadioButtonInterface {
         this._setValue(RadioButton.checkedProperty, value);
     }
 
+    get enabled(): boolean {
+        return this._getValue(RadioButton.enabledProperty);
+    }
+
+    set enabled(value: boolean) {
+        this._setValue(RadioButton.enabledProperty, value);
+    }
+
     get text(): string {
         return this._getValue(RadioButton.textProperty);
     }
@@ -258,6 +271,10 @@ export class RadioButton extends View implements RadioButtonInterface {
             this._android.setText(this.text);
         }
 
+        if (this.enabled) {
+            this._android.setEnabled(this.enabled);
+        }
+
         /// works with class styling - Brad
         if (!this.fontSize) {
             this.fontSize = 15;
@@ -308,6 +325,18 @@ function onCheckedPropertyChanged(data: PropertyChangeData) {
 
 // register the setNativeValue callbacks
 (<PropertyMetadata>RadioButton.checkedProperty.metadata).onSetNativeValue = onCheckedPropertyChanged;
+
+function onEnabledPropertyChanged(data: PropertyChangeData) {
+    let cBox = <RadioButton>data.object;
+    if (!cBox.android) {
+        return;
+    }
+
+    cBox.android.setEnabled(data.newValue);
+}
+
+// register the setNativeValue callbacks
+(<PropertyMetadata>RadioButton.enabledProperty.metadata).onSetNativeValue = onEnabledPropertyChanged;
 
 
 function onTextPropertyChanged(data: PropertyChangeData) {

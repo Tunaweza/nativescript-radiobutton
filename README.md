@@ -43,3 +43,12 @@ Place this in your view.
 </StackLayout>
 ```
 
+
+## Supported Properties
+
+
+Android | Example
+---------- | ----------
+enabled | enabled="true \| false"
+text | text="a string"
+checked | checked="true \| false"
