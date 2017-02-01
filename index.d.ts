@@ -11,7 +11,7 @@ export declare class RadioGroup extends View {
     android: any /* android.widget.RadioGroup */;
 
     /**
-     * Gets the ios Label with the checkbox as a subview
+     * Gets the ios Label
      */
     ios: any /* Label */;
 
@@ -32,12 +32,12 @@ export interface RadioGroupInterface {
 export declare class RadioButton extends View {
 
     /**
-     * Gets the native [android widget](https://developer.android.com/reference/android/widget/RadioGroup.html) that represents the user interface for this component. Valid only when running on Android OS.
+     * Gets the native [android widget](https://developer.android.com/reference/android/widget/RadioButton.html) that represents the user interface for this component. Valid only when running on Android OS.
      */
-    android: any /* android.widget.RadioGroup */;
+    android: any /* android.widget.RadioButton*/;
 
     /**
-     * Gets the ios Label with the checkbox as a subview
+     * Gets the ios Label
      */
     ios: any /* Label */;
 
@@ -56,6 +56,7 @@ export declare class RadioButton extends View {
 export interface RadioButtonInterface {
     text?: string;
     checked: boolean;
+    enabled: boolean;
     fillColor: string;
     tintColor: string;
     toggle(): void;
