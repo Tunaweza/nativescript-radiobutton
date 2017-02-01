@@ -1,21 +1,17 @@
 import { registerElement } from "nativescript-angular/element-registry";
-import { RadioButtonComponent } from './radiobutton.component';
-import { RadioGroupComponent } from './radiogroup.component';
 import { NgModule } from '@angular/core';
-import { RadioGroup, RadioButton } from '../index';
+import { RadioGroup, RadioButton } from '../';
+import { RADIOBUTTON_DIRECTIVES } from './directives';
+registerElement("RadioGroup", () => require("nativescript-radiobutton").RadioGroup);
+registerElement("RadioButton", () => require("nativescript-radiobutton").RadioButton);
 
 @NgModule({
     declarations: [
-        RadioButtonComponent,
-        RadioGroupComponent
+        RADIOBUTTON_DIRECTIVES
     ],
     exports: [
-        RadioButtonComponent,
-        RadioGroupComponent
+        RADIOBUTTON_DIRECTIVES
     ]
 
 })
 export class RadioButtonModule { }
-
-registerElement("RadioGroup", () => RadioGroup);
-registerElement("RadioButton", () => RadioButton);

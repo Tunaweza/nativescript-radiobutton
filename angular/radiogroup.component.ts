@@ -3,7 +3,7 @@ import {
     SimpleChanges, ApplicationRef
 } from "@angular/core";
 import { PropertyChangeData } from 'data/observable';
-import { RadioButton } from '../index';
+import { RadioButton } from '../';
 
 
 @Component({

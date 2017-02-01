@@ -21,13 +21,16 @@ From your command prompt/terminal go to your app's root folder and execute:
 
 ### Angular
 
-Place this at the top of your component.
+Import to NgModule for use
 
 ```typescript
-import { registerElement } from "nativescript-angular/element-registry";
-import { RadioGroup, RadioButton } from 'nativescript-radiobutton';
-registerElement("RadioGroup", () => require("nativescript-radiobutton").RadioGroup);
-registerElement("RadioButton", () => require("nativescript-radiobutton").RadioButton );
+import { RadioButtonModule } from 'nativescript-radiobutton/angular'
+
+@NgModule({
+    imports: [
+        RadioButtonModule
+    ]
+})
 
 ```
 
@@ -35,7 +38,7 @@ Place this in your view.
 
 ```html
 <StackLayout>
-    <RadioGroup>
+    <RadioGroup [(value)]="dataBoundVariable">
         <RadioButton text="Selection 1"></RadioButton>
         <RadioButton text="Selection 2"></RadioButton>
         <RadioButton text="Selection 3"></RadioButton>
@@ -43,12 +46,31 @@ Place this in your view.
 </StackLayout>
 ```
 
-
 ## Supported Properties
 
-
+###RadioButton
 Android | Example
 ---------- | ----------
 enabled | enabled="true \| false"
 text | text="a string"
 checked | checked="true \| false"
+
+###RadioGroup
+Android | Returns
+---------- | ----------
+value | the index of the radio button selected
+
+## Supported Events
+
+###RadioButton
+Android | Example
+---------- | ----------
+enabled | enabled="true \| false"
+text | text="a string"
+checked | checked="true \| false"
+
+###RadioGroup
+Android | Type
+---------- | ----------
+value | EventEmitter<number>
+

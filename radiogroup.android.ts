@@ -6,9 +6,9 @@ import { Property, PropertyChangeData } from "ui/core/dependency-observable";
 import { PropertyMetadata } from "ui/core/proxy";
 import { Font } from "ui/styling/font";
 import enums = require("ui/enums");
-import style = require("ui/styling/style");
 import app = require("application");
 import { StackLayout } from 'ui/layouts/stack-layout';
+import { Label } from 'ui/label';
 declare let android: any;
 
 export class RadioGroup extends StackLayout implements RadioGroupInterface {
@@ -96,7 +96,7 @@ export class RadioGroup extends StackLayout implements RadioGroupInterface {
 }
 
 
-export class RadioButton extends View implements RadioButtonInterface {
+export class RadioButton extends Label implements RadioButtonInterface {
 
     private _android: any; /// android.widget.RadioButton
     private _fillColor: string;
@@ -351,71 +351,71 @@ function onTextPropertyChanged(data: PropertyChangeData) {
 // register the setNativeValue callbacks
 (<PropertyMetadata>RadioButton.textProperty.metadata).onSetNativeValue = onTextPropertyChanged;
 
+//
+// export class RadioButtonStyler implements style.Styler {
+//     private static setColorLabelProperty(view: any, newValue: any) {
+//         let cb = <android.widget.RadioButton>view._nativeView;
+//         if (cb) {
+//             (<any>cb).setTextColor(new Color(newValue).android);
+//         }
+//     }
+//
+//     // font
+//     private static setFontInternalProperty(view: any, newValue: any, nativeValue?: any) {
+//         let tv = <android.widget.RadioButton>view._nativeView;
+//         let fontValue = <Font>newValue;
+//
+//         let typeface = fontValue.getAndroidTypeface();
+//         if (typeface) {
+//             tv.setTypeface(typeface);
+//         }
+//         else {
+//             tv.setTypeface(nativeValue.typeface);
+//         }
+//
+//         if (fontValue.fontSize) {
+//             tv.setTextSize(fontValue.fontSize);
+//         }
+//         else {
+//             tv.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, nativeValue.size);
+//         }
+//     }
+//
+//     private static resetFontInternalProperty(view: any, nativeValue: any) {
+//         let tv: android.widget.RadioButton = <android.widget.RadioButton>view._nativeView;
+//         if (tv && nativeValue) {
+//             tv.setTypeface(nativeValue.typeface);
+//             tv.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, nativeValue.size);
+//         }
+//     }
+//
+//     private static getNativeFontInternalValue(view: any): any {
+//         let tv: android.widget.TextView = <android.widget.RadioButton>view._nativeView;
+//         return {
+//             typeface: tv.getTypeface(),
+//             size: tv.getTextSize()
+//         };
+//     }
+//
+//     private static resetColorProperty(view: View, nativeValue: number) {
+//         // Do nothing.
+//     }
+//
+//
+//     public static registerHandlers() {
+//         style.registerHandler(style.colorProperty, new style.StylePropertyChangedHandler(
+//             RadioButtonStyler.setColorLabelProperty,
+//             RadioButtonStyler.resetColorProperty), "RadioButton");
+//
+//         style.registerHandler(style.fontInternalProperty, new style.StylePropertyChangedHandler(
+//             RadioButtonStyler.setFontInternalProperty,
+//             RadioButtonStyler.resetFontInternalProperty,
+//             RadioButtonStyler.getNativeFontInternalValue), "RadioButton");
+//
+//         style.registerHandler(style.backgroundColorProperty, new style.StylePropertyChangedHandler(
+//             RadioButtonStyler.setColorLabelProperty,
+//             RadioButtonStyler.resetColorProperty), "RadioButton");
+//     }
+// }
 
-export class RadioButtonStyler implements style.Styler {
-    private static setColorLabelProperty(view: any, newValue: any) {
-        let cb = <android.widget.RadioButton>view._nativeView;
-        if (cb) {
-            (<any>cb).setTextColor(new Color(newValue).android);
-        }
-    }
-
-    // font
-    private static setFontInternalProperty(view: any, newValue: any, nativeValue?: any) {
-        let tv = <android.widget.RadioButton>view._nativeView;
-        let fontValue = <Font>newValue;
-
-        let typeface = fontValue.getAndroidTypeface();
-        if (typeface) {
-            tv.setTypeface(typeface);
-        }
-        else {
-            tv.setTypeface(nativeValue.typeface);
-        }
-
-        if (fontValue.fontSize) {
-            tv.setTextSize(fontValue.fontSize);
-        }
-        else {
-            tv.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, nativeValue.size);
-        }
-    }
-
-    private static resetFontInternalProperty(view: any, nativeValue: any) {
-        let tv: android.widget.RadioButton = <android.widget.RadioButton>view._nativeView;
-        if (tv && nativeValue) {
-            tv.setTypeface(nativeValue.typeface);
-            tv.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, nativeValue.size);
-        }
-    }
-
-    private static getNativeFontInternalValue(view: any): any {
-        let tv: android.widget.TextView = <android.widget.RadioButton>view._nativeView;
-        return {
-            typeface: tv.getTypeface(),
-            size: tv.getTextSize()
-        };
-    }
-
-    private static resetColorProperty(view: View, nativeValue: number) {
-        // Do nothing.
-    }
-
-
-    public static registerHandlers() {
-        style.registerHandler(style.colorProperty, new style.StylePropertyChangedHandler(
-            RadioButtonStyler.setColorLabelProperty,
-            RadioButtonStyler.resetColorProperty), "RadioButton");
-
-        style.registerHandler(style.fontInternalProperty, new style.StylePropertyChangedHandler(
-            RadioButtonStyler.setFontInternalProperty,
-            RadioButtonStyler.resetFontInternalProperty,
-            RadioButtonStyler.getNativeFontInternalValue), "RadioButton");
-
-        style.registerHandler(style.backgroundColorProperty, new style.StylePropertyChangedHandler(
-            RadioButtonStyler.setColorLabelProperty,
-            RadioButtonStyler.resetColorProperty), "RadioButton");
-    }
-}
-
-RadioButtonStyler.registerHandlers();
+// RadioButtonStyler.registerHandlers();
