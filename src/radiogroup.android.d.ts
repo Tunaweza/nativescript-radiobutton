@@ -4,6 +4,7 @@ import { StackLayout } from 'tns-core-modules/ui/layouts/stack-layout';
 import { Label } from 'tns-core-modules/ui/label';
 export declare class RadioGroup extends StackLayout implements RadioGroupInterface {
     nativeViewProtected: android.widget.RadioGroup;
+    static selectedEvent: string;
     private _android;
     _fillColor: string;
     _tintColor: string;
@@ -15,6 +16,8 @@ export declare class RadioGroup extends StackLayout implements RadioGroupInterfa
     fillColor: string;
     tintColor: string;
     createNativeView(): any;
+    initNativeView(): void;
+    disposeNativeView(): void;
 }
 export declare const checkedButtonProperty: Property<RadioGroup, number>;
 export declare class RadioButton extends Label implements RadioButtonInterface {
@@ -27,6 +30,7 @@ export declare class RadioButton extends Label implements RadioButtonInterface {
     private _checkPaddingTop;
     private _checkPaddingRight;
     private _checkPaddingBottom;
+    private _androidViewId;
     constructor();
     readonly android: any;
     readonly nativeView: any;

@@ -9,20 +9,82 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var view_1 = require("tns-core-modules/ui/core/view");
 var color_1 = require("tns-core-modules/color");
 var platform_1 = require("tns-core-modules/platform");
-var app = require("tns-core-modules/application");
 var stack_layout_1 = require("tns-core-modules/ui/layouts/stack-layout");
 var label_1 = require("tns-core-modules/ui/label");
+var GroupCheckedChangeListener;
+function initializeGroupCheckedChangeListener() {
+    if (GroupCheckedChangeListener) {
+        return;
+    }
+    var GroupCheckedChangeListenerImpl = (function (_super) {
+        __extends(GroupCheckedChangeListenerImpl, _super);
+        function GroupCheckedChangeListenerImpl(owner) {
+            var _this = _super.call(this) || this;
+            _this.owner = owner;
+            return global.__native(_this);
+        }
+        GroupCheckedChangeListenerImpl.prototype.onCheckedChanged = function (sender, checkedId) {
+            if (this.owner) {
+                exports.checkedButtonProperty.nativeValueChange(this.owner, checkedId);
+                var view = this.owner.android.findViewById(checkedId);
+                this.owner.notify({
+                    eventName: RadioGroup.selectedEvent,
+                    object: this.owner,
+                    checkId: checkedId,
+                    value: view.getText(),
+                });
+            }
+        };
+        GroupCheckedChangeListenerImpl = __decorate([
+            Interfaces([android.widget.RadioGroup.OnCheckedChangeListener]),
+            __metadata("design:paramtypes", [RadioGroup])
+        ], GroupCheckedChangeListenerImpl);
+        return GroupCheckedChangeListenerImpl;
+    }(java.lang.Object));
+    GroupCheckedChangeListener = GroupCheckedChangeListenerImpl;
+}
+var ButtonCheckedChangeListener;
+function initializeButtonCheckedChangeListener() {
+    if (ButtonCheckedChangeListener) {
+        return;
+    }
+    var ButtonCheckedChangeListenerImpl = (function (_super) {
+        __extends(ButtonCheckedChangeListenerImpl, _super);
+        function ButtonCheckedChangeListenerImpl(owner) {
+            var _this = _super.call(this) || this;
+            _this.owner = owner;
+            return global.__native(_this);
+        }
+        ButtonCheckedChangeListenerImpl.prototype.onCheckedChanged = function (buttonView, isChecked) {
+            if (this.owner) {
+                exports.checkedButtonProperty.nativeValueChange(this.owner, isChecked);
+            }
+        };
+        ButtonCheckedChangeListenerImpl = __decorate([
+            Interfaces([android.widget.CompoundButton.OnCheckedChangeListener]),
+            __metadata("design:paramtypes", [RadioButton])
+        ], ButtonCheckedChangeListenerImpl);
+        return ButtonCheckedChangeListenerImpl;
+    }(java.lang.Object));
+    ButtonCheckedChangeListener = ButtonCheckedChangeListenerImpl;
+}
 var RadioGroup = (function (_super) {
     __extends(RadioGroup, _super);
     function RadioGroup() {
-        var _this = this;
-        console.log('Calling RadioGroup constructor');
-        _this = _super.call(this) || this;
-        return _this;
+        return _super.call(this) || this;
     }
     Object.defineProperty(RadioGroup.prototype, "android", {
         get: function () {
@@ -33,7 +95,6 @@ var RadioGroup = (function (_super) {
     });
     Object.defineProperty(RadioGroup.prototype, "nativeView", {
         get: function () {
-            console.log('Calling RadioGroup nativeView');
             return this._android;
         },
         enumerable: true,
@@ -72,25 +133,28 @@ var RadioGroup = (function (_super) {
         configurable: true
     });
     RadioGroup.prototype.createNativeView = function () {
-        console.log('Calling RadioGroup.createNativeView');
-        this._android = new android.widget.RadioGroup(this._context, null);
-        var that = new WeakRef(this);
-        this._android.setOnCheckedChangeListener(new android.widget.RadioGroup.OnCheckedChangeListener({
-            onCheckedChanged: function (sender, checkedId) {
-                console.log('onCheckedChanged called');
-                if (this.owner) {
-                    console.log('inside if');
-                    this.owner._onPropertyChangedFromNative(exports.checkedButtonProperty, checkedId);
-                }
-                console.log('finish onCheckedChanged');
-            }
-        }));
+        initializeGroupCheckedChangeListener();
+        this._android = new android.widget.RadioGroup(this._context);
+        var listener = new GroupCheckedChangeListener(this);
+        this._android.setOnCheckedChangeListener(listener);
+        this._android.listener = listener;
         if (!this._androidViewId) {
             this._androidViewId = android.view.View.generateViewId();
         }
         this._android.setId(this._androidViewId);
         return this._android;
     };
+    RadioGroup.prototype.initNativeView = function () {
+        _super.prototype.initNativeView.call(this);
+        var nativeView = this.nativeViewProtected;
+        nativeView.listener.owner = this;
+    };
+    RadioGroup.prototype.disposeNativeView = function () {
+        var nativeView = this.nativeViewProtected;
+        nativeView.listener.owner = null;
+        _super.prototype.disposeNativeView.call(this);
+    };
+    RadioGroup.selectedEvent = 'selected';
     return RadioGroup;
 }(stack_layout_1.StackLayout));
 exports.RadioGroup = RadioGroup;
@@ -99,10 +163,7 @@ exports.checkedButtonProperty.register(RadioGroup);
 var RadioButton = (function (_super) {
     __extends(RadioButton, _super);
     function RadioButton() {
-        var _this = this;
-        console.log('Calling RadioButton constructor');
-        _this = _super.call(this) || this;
-        return _this;
+        return _super.call(this) || this;
     }
     Object.defineProperty(RadioButton.prototype, "android", {
         get: function () {
@@ -231,7 +292,7 @@ var RadioButton = (function (_super) {
         configurable: true
     });
     RadioButton.prototype.createNativeView = function () {
-        console.log('Calling RadioButton.createNativeView');
+        initializeButtonCheckedChangeListener();
         this._android = new android.widget.RadioButton(this._context, null);
         if (this.checkPaddingLeft) {
             this._android.setPadding(parseInt(this.checkPaddingLeft), this._android.getPaddingTop(), this._android.getPaddingRight(), this._android.getPaddingBottom());
@@ -271,24 +332,13 @@ var RadioButton = (function (_super) {
         if (!this.fontSize) {
             this.fontSize = 15;
         }
-        if (this._checkStyle) {
-            var drawable = app.android.context.getResources().getIdentifier(this._checkStyle, "drawable", app.android.context.getPackageName());
-            this._android.setButtonDrawable(drawable);
+        var listener = new ButtonCheckedChangeListener(this);
+        this._android.setOnCheckedChangeListener(listener);
+        this._android.listener = listener;
+        if (!this._androidViewId) {
+            this._androidViewId = android.view.View.generateViewId();
         }
-        if (this._android) {
-            if (this.fillColor) {
-                android.support.v4.widget.CompoundButtonCompat.setButtonTintList(this._android, android.content.res.ColorStateList.valueOf(new color_1.Color(this._fillColor).android));
-            }
-        }
-        var that = new WeakRef(this);
-        this._android.setOnCheckedChangeListener(new android.widget.CompoundButton.OnCheckedChangeListener({
-            onCheckedChanged: function (sender, isChecked) {
-                if (this.owner) {
-                    this.owner._onPropertyChangedFromNative(exports.checkedProperty, isChecked);
-                }
-            }
-        }));
-        console.log('end of createNativeView');
+        this._android.setId(this._androidViewId);
         return this._android;
     };
     RadioButton.prototype.toggle = function () {

@@ -1,9 +1,16 @@
-import { View } from "tns-core-modules/ui/core/view";
+import { Property, View } from 'tns-core-modules/ui/core/view';
+
+export interface SelectedEventData extends EventData {
+  object: any;
+  checkId: number;
+  value: string;
+}
 
 /**
  * Represents a RadioGroup component.
  */
 export declare class RadioGroup extends View {
+    public static selectedEvent = 'selected';
 
     /**
      * Gets the native [android widget](https://developer.android.com/reference/android/widget/RadioGroup.html) that represents the user interface for this component. Valid only when running on Android OS.
@@ -20,8 +27,10 @@ export declare class RadioGroup extends View {
      */
     checkedButton: number;
 
-
+    public on(event: "selected", callback: (args: SelectedEventData) => void, thisArg?: any);
 }
+
+export const checkedProperty: Property<Switch, boolean>;
 
 export interface RadioGroupInterface {
     checkedButton: number;
