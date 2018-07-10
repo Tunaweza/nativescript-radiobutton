@@ -1,15 +1,15 @@
 import { RadioGroupInterface, RadioButtonInterface } from './';
-import { View } from "ui/core/view";
-import { Color } from "color";
-import { isAndroid, device } from "platform";
-import { Property, PropertyChangeData } from "ui/core/dependency-observable";
-import { PropertyMetadata } from "ui/core/proxy";
-import { Font } from "ui/styling/font";
-import enums = require("ui/enums");
-import app = require("application");
-import { StackLayout } from 'ui/layouts/stack-layout';
-import { Label } from 'ui/label';
+import { booleanConverter, Property, View } from 'tns-core-modules/ui/core/view';
+import { Color } from 'tns-core-modules/color';
+import { isAndroid, device } from 'tns-core-modules/platform';
+import { Font } from 'tns-core-modules/ui/styling/font';
+import enums = require('tns-core-modules/ui/enums');
+import app = require('tns-core-modules/application');
+import { StackLayout } from 'tns-core-modules/ui/layouts/stack-layout';
+import { Label } from 'tns-core-modules/ui/label';
+
 declare let android: any;
+
 
 export class RadioGroup extends StackLayout implements RadioGroupInterface {
 
@@ -17,13 +17,6 @@ export class RadioGroup extends StackLayout implements RadioGroupInterface {
     public _fillColor: string;
     public _tintColor: string;
     private _androidViewId: number;
-
-    public static checkedButtonProperty = new Property(
-        "checkedButton",
-        "RadioGroup",
-        new PropertyMetadata(false)
-    );
-
 
     constructor() {
         super();
@@ -38,11 +31,11 @@ export class RadioGroup extends StackLayout implements RadioGroupInterface {
     }
 
     get checkedButton(): number {
-        return this._getValue(RadioGroup.checkedButtonProperty);
+        return this._getValue(checkedButtonProperty);
     }
 
     set checkedButton(value: number) {
-        this._setValue(RadioGroup.checkedButtonProperty, value);
+        this._setValue(checkedButtonProperty, value);
     }
 
     get fillColor(): string {
@@ -65,7 +58,6 @@ export class RadioGroup extends StackLayout implements RadioGroupInterface {
         this.fillColor = color;
     }
 
-
     public _createUI() {
 
         this._android = new android.widget.RadioGroup(this._context, null);
@@ -79,7 +71,7 @@ export class RadioGroup extends StackLayout implements RadioGroupInterface {
 
             onCheckedChanged: function (sender, checkedId: number) {
                 if (this.owner) {
-                    this.owner._onPropertyChangedFromNative(RadioGroup.checkedButtonProperty, checkedId);
+                    this.owner._onPropertyChangedFromNative(checkedButtonProperty, checkedId);
                 }
             }
         }));
@@ -88,12 +80,14 @@ export class RadioGroup extends StackLayout implements RadioGroupInterface {
             this._androidViewId = android.view.View.generateViewId();
         }
         this._android.setId(this._androidViewId);
-
-
     }
-
-
 }
+
+export const checkedButtonProperty = new Property<RadioGroup, number>(
+  {name: "checkedButton"}
+);
+
+checkedButtonProperty.register(RadioGroup);
 
 
 export class RadioButton extends Label implements RadioButtonInterface {
@@ -106,22 +100,6 @@ export class RadioButton extends Label implements RadioButtonInterface {
     private _checkPaddingTop: string;
     private _checkPaddingRight: string;
     private _checkPaddingBottom: string;
-    public static checkedProperty = new Property(
-        "checked",
-        "RadioButton",
-        new PropertyMetadata(false)
-    );
-    public static enabledProperty = new Property(
-        "enabled",
-        "RadioButton",
-        new PropertyMetadata(false)
-    );
-
-    public static textProperty = new Property(
-        "text",
-        "RadioButton",
-        new PropertyMetadata(false)
-    );
 
     constructor() {
         super();
@@ -185,27 +163,27 @@ export class RadioButton extends Label implements RadioButtonInterface {
     }
 
     get checked(): boolean {
-        return this._getValue(RadioButton.checkedProperty);
+        return this._getValue(checkedProperty);
     }
 
     set checked(value: boolean) {
-        this._setValue(RadioButton.checkedProperty, value);
+        this._setValue(checkedProperty, value);
     }
 
     get enabled(): boolean {
-        return this._getValue(RadioButton.enabledProperty);
+        return this._getValue(enabledProperty);
     }
 
     set enabled(value: boolean) {
-        this._setValue(RadioButton.enabledProperty, value);
+        this._setValue(enabledProperty, value);
     }
 
     get text(): string {
-        return this._getValue(RadioButton.textProperty);
+        return this._getValue(textProperty);
     }
 
     set text(value: string) {
-        this._setValue(RadioButton.textProperty, value);
+        this._setValue(textProperty, value);
     }
 
     get fillColor(): string {
@@ -301,7 +279,7 @@ export class RadioButton extends Label implements RadioButtonInterface {
 
             onCheckedChanged: function (sender, isChecked) {
                 if (this.owner) {
-                    this.owner._onPropertyChangedFromNative(RadioButton.checkedProperty, isChecked);
+                    this.owner._onPropertyChangedFromNative(checkedProperty, isChecked);
                 }
             }
         }));
@@ -313,43 +291,25 @@ export class RadioButton extends Label implements RadioButtonInterface {
     }
 }
 
-
-function onCheckedPropertyChanged(data: PropertyChangeData) {
-    let cBox = <RadioButton>data.object;
-    if (!cBox.android) {
-        return;
-    }
-
-    cBox.android.setChecked(data.newValue);
-}
-
-// register the setNativeValue callbacks
-(<PropertyMetadata>RadioButton.checkedProperty.metadata).onSetNativeValue = onCheckedPropertyChanged;
-
-function onEnabledPropertyChanged(data: PropertyChangeData) {
-    let cBox = <RadioButton>data.object;
-    if (!cBox.android) {
-        return;
-    }
-
-    cBox.android.setEnabled(data.newValue);
-}
-
-// register the setNativeValue callbacks
-(<PropertyMetadata>RadioButton.enabledProperty.metadata).onSetNativeValue = onEnabledPropertyChanged;
+export const checkedProperty = new Property<RadioButton, boolean>({
+  name: 'checked',
+  defaultValue: false,
+  valueConverter: booleanConverter
+});
+checkedProperty.register(RadioButton);
 
 
-function onTextPropertyChanged(data: PropertyChangeData) {
-    let cBox = <RadioButton>data.object;
-    if (!cBox.android) {
-        return;
-    }
+export const enabledProperty = new Property<RadioButton, boolean>({
+  name: 'enabled',
+  defaultValue: true,
+  valueConverter: booleanConverter
+});
+enabledProperty.register(RadioButton);
 
-    cBox.android.setText(data.newValue);
-}
-
-// register the setNativeValue callbacks
-(<PropertyMetadata>RadioButton.textProperty.metadata).onSetNativeValue = onTextPropertyChanged;
+export const textProperty = new Property<RadioButton, string>({
+  name: 'text'
+});
+textProperty.register(RadioButton);
 
 //
 // export class RadioButtonStyler implements style.Styler {

@@ -1,1 +1,2 @@
-export declare class RadioButtonModule { }
+export declare class RadioButtonModule {
+}

@@ -1,13 +1,12 @@
 import { RadioGroupInterface, RadioButtonInterface } from './';
-import { Property } from "ui/core/dependency-observable";
-import { StackLayout } from 'ui/layouts/stack-layout';
-import { Label } from 'ui/label';
+import { Property } from 'tns-core-modules/ui/core/view';
+import { StackLayout } from 'tns-core-modules/ui/layouts/stack-layout';
+import { Label } from 'tns-core-modules/ui/label';
 export declare class RadioGroup extends StackLayout implements RadioGroupInterface {
     private _android;
     _fillColor: string;
     _tintColor: string;
     private _androidViewId;
-    static checkedButtonProperty: Property;
     constructor();
     readonly android: any;
     readonly _nativeView: any;
@@ -16,6 +15,7 @@ export declare class RadioGroup extends StackLayout implements RadioGroupInterfa
     tintColor: string;
     _createUI(): void;
 }
+export declare const checkedButtonProperty: Property<RadioGroup, number>;
 export declare class RadioButton extends Label implements RadioButtonInterface {
     private _android;
     private _fillColor;
@@ -25,9 +25,6 @@ export declare class RadioButton extends Label implements RadioButtonInterface {
     private _checkPaddingTop;
     private _checkPaddingRight;
     private _checkPaddingBottom;
-    static checkedProperty: Property;
-    static enabledProperty: Property;
-    static textProperty: Property;
     constructor();
     readonly android: any;
     readonly _nativeView: any;
@@ -45,3 +42,6 @@ export declare class RadioButton extends Label implements RadioButtonInterface {
     _createUI(): void;
     toggle(): void;
 }
+export declare const checkedProperty: Property<RadioButton, boolean>;
+export declare const enabledProperty: Property<RadioButton, boolean>;
+export declare const textProperty: Property<RadioButton, string>;

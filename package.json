@@ -1,6 +1,6 @@
 {
   "name": "nativescript-radiobutton",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "main": "radiogroup",
   "author": "Tunaweza <npm@tunaweza.com> (http://tunaweza.com)",
   "license": "Apache 2.0",
@@ -11,7 +11,7 @@
   "description": "A plugin for nativescript that exposes the radiogroup and radiobutton native view elements.",
   "nativescript": {
     "platforms": {
-      "android": "2.4.0"
+      "android": "4.0.0"
     }
   },
   "scripts": {
@@ -19,13 +19,23 @@
     "prepublish": "npm run ngc"
   },
   "devDependencies": {
-    "@angular/compiler": "2.4.3",
-    "@angular/compiler-cli": "2.4.3",
-    "typescript": "~2.1.0",
-    "tns-platform-declarations": "^2.0.0",
-    "tns-core-modules": "^2.4.4",
-    "nativescript-angular": "^1.3.0",
-    "@angular/common": "2.4.3",
-    "@angular/core": "2.4.3"
+    "@angular/animations": "~6.0.6",
+    "@angular/common": "~6.0.6",
+    "@angular/compiler": "~6.0.6",
+    "@angular/compiler-cli": "~6.0.6",
+    "@angular/core": "~6.0.6",
+    "@angular/forms": "~6.0.6",
+    "@angular/http": "~6.0.6",
+    "@angular/platform-browser": "~6.0.6",
+    "@angular/platform-browser-dynamic": "~6.0.6",
+    "@angular/router": "~6.0.6",
+    "codelyzer": "^4.3.0",
+    "rxjs": "~6.1.0",
+    "tns-platform-declarations": "^4.1.0",
+    "tns-core-modules": "^4.1.0",
+    "tslint": "^5.5.0",
+    "typescript": "~2.7.2",
+    "zone.js": "^0.8.26",
+    "nativescript-angular": "~6.0.6"
   }
 }

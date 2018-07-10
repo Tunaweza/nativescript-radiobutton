@@ -2,7 +2,6 @@ import {
     Component, ChangeDetectionStrategy, ElementRef, AfterViewInit, Output, EventEmitter, Input, OnChanges,
     SimpleChanges, ApplicationRef
 } from "@angular/core";
-import { PropertyChangeData } from 'data/observable';
 import { RadioButton } from '../';
 
 
@@ -43,7 +42,7 @@ export class RadioGroupComponent implements AfterViewInit , OnChanges {
             i++;
         }
 
-        this._element.nativeElement.on('propertyChange', (res: PropertyChangeData) => {
+        this._element.nativeElement.on('propertyChange', (res) => {
             if (res.propertyName === 'checkedButton') {
                 this.getNewSelectedBox();
             }
