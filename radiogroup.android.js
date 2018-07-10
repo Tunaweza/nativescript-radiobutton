@@ -72,12 +72,10 @@ var RadioGroup = (function (_super) {
         configurable: true
     });
     RadioGroup.prototype._createNativeView = function () {
+        console.log('Calling _createNativeView');
         this._android = new android.widget.RadioGroup(this._context, null);
         var that = new WeakRef(this);
         this._android.setOnCheckedChangeListener(new android.widget.RadioGroup.OnCheckedChangeListener({
-            get owner() {
-                return that.get();
-            },
             onCheckedChanged: function (sender, checkedId) {
                 if (this.owner) {
                     this.owner._onPropertyChangedFromNative(exports.checkedButtonProperty, checkedId);
@@ -97,7 +95,10 @@ exports.checkedButtonProperty.register(RadioGroup);
 var RadioButton = (function (_super) {
     __extends(RadioButton, _super);
     function RadioButton() {
-        return _super.call(this) || this;
+        var _this = this;
+        console.log('Calling RadioButton constructor');
+        _this = _super.call(this) || this;
+        return _this;
     }
     Object.defineProperty(RadioButton.prototype, "android", {
         get: function () {
@@ -226,6 +227,7 @@ var RadioButton = (function (_super) {
         configurable: true
     });
     RadioButton.prototype._createNativeView = function () {
+        console.log('Calling _createNativeView');
         this._android = new android.widget.RadioButton(this._context, null);
         if (this.checkPaddingLeft) {
             this._android.setPadding(parseInt(this.checkPaddingLeft), this._android.getPaddingTop(), this._android.getPaddingRight(), this._android.getPaddingBottom());
@@ -276,9 +278,6 @@ var RadioButton = (function (_super) {
         }
         var that = new WeakRef(this);
         this._android.setOnCheckedChangeListener(new android.widget.CompoundButton.OnCheckedChangeListener({
-            get owner() {
-                return that.get();
-            },
             onCheckedChanged: function (sender, isChecked) {
                 if (this.owner) {
                     this.owner._onPropertyChangedFromNative(exports.checkedProperty, isChecked);

@@ -8,10 +8,9 @@ import app = require('tns-core-modules/application');
 import { StackLayout } from 'tns-core-modules/ui/layouts/stack-layout';
 import { Label } from 'tns-core-modules/ui/label';
 
-declare let android: any;
-
 
 export class RadioGroup extends StackLayout implements RadioGroupInterface {
+    nativeViewProtected: android.widget.RadioGroup;
 
     private _android: any; /// android.widget.RadioGroup
     public _fillColor: string;
@@ -61,16 +60,13 @@ export class RadioGroup extends StackLayout implements RadioGroupInterface {
     }
 
     public _createNativeView() {
+        console.log('Calling _createNativeView')
 
         this._android = new android.widget.RadioGroup(this._context, null);
 
         let that = new WeakRef(this);
 
         this._android.setOnCheckedChangeListener(new android.widget.RadioGroup.OnCheckedChangeListener({
-            get owner() {
-                return that.get();
-            },
-
             onCheckedChanged: function (sender, checkedId: number) {
                 if (this.owner) {
                     this.owner._onPropertyChangedFromNative(checkedButtonProperty, checkedId);
@@ -93,6 +89,7 @@ checkedButtonProperty.register(RadioGroup);
 
 
 export class RadioButton extends Label implements RadioButtonInterface {
+    nativeViewProtected: android.widget.RadioButton;
 
     private _android: any; /// android.widget.RadioButton
     private _fillColor: string;
@@ -104,6 +101,7 @@ export class RadioButton extends Label implements RadioButtonInterface {
     private _checkPaddingBottom: string;
 
     constructor() {
+        console.log('Calling RadioButton constructor');
         super();
     }
 
@@ -209,7 +207,7 @@ export class RadioButton extends Label implements RadioButtonInterface {
     }
 
     public _createNativeView() {
-
+        console.log('Calling _createNativeView')
         // this._android = new android.widget.RadioButton(this._context, null);
         this._android = new android.widget.RadioButton(this._context, null);
 
@@ -274,10 +272,6 @@ export class RadioButton extends Label implements RadioButtonInterface {
         let that = new WeakRef(this);
 
         this._android.setOnCheckedChangeListener(new android.widget.CompoundButton.OnCheckedChangeListener({
-            get owner() {
-                return that.get();
-            },
-
             onCheckedChanged: function (sender, isChecked) {
                 if (this.owner) {
                     this.owner._onPropertyChangedFromNative(checkedProperty, isChecked);
