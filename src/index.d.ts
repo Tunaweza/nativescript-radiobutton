@@ -26,11 +26,9 @@ export declare class RadioGroup extends View {
      * The id of the child radio button that should be checked by default within this radio group.
      */
     checkedButton: number;
-
-    public on(event: "selected", callback: (args: SelectedEventData) => void, thisArg?: any);
 }
 
-export const checkedProperty: Property<Switch, boolean>;
+export const checkedButtonProperty: Property<RadioGroup, number>;
 
 export interface RadioGroupInterface {
     checkedButton: number;
@@ -61,6 +59,10 @@ export declare class RadioButton extends View {
     toggle(): void;
 
 }
+
+export const checkedProperty: Property<RadioButton, boolean>;
+export const enabledProperty: Property<RadioButton, boolean>;
+export const textProperty: Property<RadioButton, string>;
 
 export interface RadioButtonInterface {
     text?: string;
