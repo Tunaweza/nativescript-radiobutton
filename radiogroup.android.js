@@ -19,7 +19,10 @@ var label_1 = require("tns-core-modules/ui/label");
 var RadioGroup = (function (_super) {
     __extends(RadioGroup, _super);
     function RadioGroup() {
-        return _super.call(this) || this;
+        var _this = this;
+        console.log('Calling RadioGroup constructor');
+        _this = _super.call(this) || this;
+        return _this;
     }
     Object.defineProperty(RadioGroup.prototype, "android", {
         get: function () {
@@ -28,8 +31,9 @@ var RadioGroup = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(RadioGroup.prototype, "_nativeView", {
+    Object.defineProperty(RadioGroup.prototype, "nativeView", {
         get: function () {
+            console.log('Calling RadioGroup nativeView');
             return this._android;
         },
         enumerable: true,
@@ -102,7 +106,7 @@ var RadioButton = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(RadioButton.prototype, "_nativeView", {
+    Object.defineProperty(RadioButton.prototype, "nativeView", {
         get: function () {
             return this._android;
         },

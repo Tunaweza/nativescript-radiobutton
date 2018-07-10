@@ -19,14 +19,16 @@ export class RadioGroup extends StackLayout implements RadioGroupInterface {
     private _androidViewId: number;
 
     constructor() {
-        super();
+      console.log('Calling RadioGroup constructor');
+      super();
     }
 
     get android() {
         return this._android;
     }
 
-    get _nativeView() {
+    get nativeView() {
+        console.log('Calling RadioGroup nativeView');
         return this._android;
     }
 
@@ -109,7 +111,7 @@ export class RadioButton extends Label implements RadioButtonInterface {
         return this._android;
     }
 
-    get _nativeView() {
+    get nativeView() {
         return this._android;
     }
 

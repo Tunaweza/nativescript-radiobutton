@@ -16,6 +16,8 @@
   },
   "scripts": {
     "ngc": "ngc",
+    "tsc": "tsc -skipLibCheck",
+    "plugin.tscwatch": "npm run tsc -- -w",
     "prepublish": "npm run ngc"
   },
   "devDependencies": {

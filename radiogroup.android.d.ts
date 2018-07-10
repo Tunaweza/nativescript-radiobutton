@@ -9,7 +9,7 @@ export declare class RadioGroup extends StackLayout implements RadioGroupInterfa
     private _androidViewId;
     constructor();
     readonly android: any;
-    readonly _nativeView: any;
+    readonly nativeView: any;
     checkedButton: number;
     fillColor: string;
     tintColor: string;
@@ -27,7 +27,7 @@ export declare class RadioButton extends Label implements RadioButtonInterface {
     private _checkPaddingBottom;
     constructor();
     readonly android: any;
-    readonly _nativeView: any;
+    readonly nativeView: any;
     checkStyle: string;
     checkPadding: string;
     checkPaddingLeft: string;
