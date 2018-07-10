@@ -81,6 +81,7 @@ function initializeButtonCheckedChangeListener() {
     }(java.lang.Object));
     ButtonCheckedChangeListener = ButtonCheckedChangeListenerImpl;
 }
+exports.checkedButtonProperty = new view_1.Property({ name: 'checkedButton' });
 var RadioGroup = (function (_super) {
     __extends(RadioGroup, _super);
     function RadioGroup() {
@@ -158,8 +159,35 @@ var RadioGroup = (function (_super) {
     return RadioGroup;
 }(stack_layout_1.StackLayout));
 exports.RadioGroup = RadioGroup;
-exports.checkedButtonProperty = new view_1.Property({ name: "checkedButton" });
 exports.checkedButtonProperty.register(RadioGroup);
+exports.checkedProperty = new view_1.Property({
+    name: 'checked',
+    defaultValue: false,
+    valueConverter: view_1.booleanConverter
+});
+exports.enabledProperty = new view_1.Property({
+    name: 'enabled',
+    defaultValue: true,
+    valueConverter: view_1.booleanConverter
+});
+exports.textProperty = new view_1.Property({
+    name: 'text'
+});
+exports.fillColorProperty = new view_1.CssProperty({
+    name: 'fillColor',
+    cssName: 'fill-color',
+    valueConverter: function (v) {
+        return String(v);
+    }
+});
+exports.tintColorProperty = new view_1.CssProperty({
+    name: 'tintColor',
+    cssName: 'tint-color',
+    defaultValue: 'black',
+    valueConverter: function (v) {
+        return String(v);
+    }
+});
 var RadioButton = (function (_super) {
     __extends(RadioButton, _super);
     function RadioButton() {
@@ -239,16 +267,18 @@ var RadioButton = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(RadioButton.prototype, "checked", {
-        get: function () {
-            return this._getValue(exports.checkedProperty);
-        },
-        set: function (value) {
-            this._setValue(exports.checkedProperty, value);
-        },
-        enumerable: true,
-        configurable: true
-    });
+    RadioButton.prototype[exports.checkedProperty.getDefault] = function () {
+        return false;
+    };
+    RadioButton.prototype[exports.checkedProperty.setNative] = function (value) {
+        this.nativeViewProtected.setChecked(Boolean(value));
+    };
+    RadioButton.prototype[exports.textProperty.getDefault] = function () {
+        return "";
+    };
+    RadioButton.prototype[exports.textProperty.setNative] = function (value) {
+        this.nativeViewProtected.setText(java.lang.String.valueOf(value));
+    };
     Object.defineProperty(RadioButton.prototype, "enabled", {
         get: function () {
             return this._getValue(exports.enabledProperty);
@@ -271,22 +301,23 @@ var RadioButton = (function (_super) {
     });
     Object.defineProperty(RadioButton.prototype, "fillColor", {
         get: function () {
-            return this._fillColor;
+            return this.style.fillColor;
         },
         set: function (color) {
-            this._fillColor = color;
-            if (this._android && platform_1.device.sdkVersion >= "21")
-                this._android.setButtonTintList(android.content.res.ColorStateList.valueOf(new color_1.Color(this._fillColor).android));
+            this.style.fillColor = color;
+            if (this._android && platform_1.device.sdkVersion >= "21") {
+                this._android.setButtonTintList(android.content.res.ColorStateList.valueOf(new color_1.Color(color).android));
+            }
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(RadioButton.prototype, "tintColor", {
         get: function () {
-            return this.fillColor;
+            return this.style.fillColor;
         },
         set: function (color) {
-            this.fillColor = color;
+            this.style.fillColor = color;
         },
         enumerable: true,
         configurable: true
@@ -347,20 +378,9 @@ var RadioButton = (function (_super) {
     return RadioButton;
 }(label_1.Label));
 exports.RadioButton = RadioButton;
-exports.checkedProperty = new view_1.Property({
-    name: 'checked',
-    defaultValue: false,
-    valueConverter: view_1.booleanConverter
-});
 exports.checkedProperty.register(RadioButton);
-exports.enabledProperty = new view_1.Property({
-    name: 'enabled',
-    defaultValue: true,
-    valueConverter: view_1.booleanConverter
-});
 exports.enabledProperty.register(RadioButton);
-exports.textProperty = new view_1.Property({
-    name: 'text'
-});
 exports.textProperty.register(RadioButton);
+exports.fillColorProperty.register(view_1.Style);
+exports.tintColorProperty.register(view_1.Style);
 //# sourceMappingURL=radiogroup.android.js.map

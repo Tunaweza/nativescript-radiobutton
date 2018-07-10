@@ -1,5 +1,11 @@
 import { RadioGroupInterface, RadioButtonInterface } from './';
-import { booleanConverter, Property, View } from 'tns-core-modules/ui/core/view';
+import {
+  booleanConverter,
+  CssProperty,
+  Property,
+  Style,
+  View
+} from 'tns-core-modules/ui/core/view';
 import { Color } from 'tns-core-modules/color';
 import { isAndroid, device } from 'tns-core-modules/platform';
 import { Font } from 'tns-core-modules/ui/styling/font';
@@ -10,8 +16,8 @@ import { Label } from 'tns-core-modules/ui/label';
 
 
 interface GroupCheckedChangeListener {
-  //new (owner: RadioGroup): android.widget.CompoundButton.OnCheckedChangeListener;
-  new (owner: RadioGroup): android.widget.RadioGroup.OnCheckedChangeListener;
+    //new (owner: RadioGroup): android.widget.CompoundButton.OnCheckedChangeListener;
+    new (owner: RadioGroup): android.widget.RadioGroup.OnCheckedChangeListener;
 }
 
 let GroupCheckedChangeListener: GroupCheckedChangeListener;
@@ -73,6 +79,15 @@ function initializeButtonCheckedChangeListener(): void {
   ButtonCheckedChangeListener = ButtonCheckedChangeListenerImpl as any;
 }
 
+
+// RadioGroup properties
+
+export const checkedButtonProperty = new Property<RadioGroup, number>(
+  {name: 'checkedButton'}
+);
+
+
+// RadioGroup definition
 
 export class RadioGroup extends StackLayout implements RadioGroupInterface {
     nativeViewProtected: android.widget.RadioGroup;
@@ -153,18 +168,52 @@ export class RadioGroup extends StackLayout implements RadioGroupInterface {
     }
 }
 
-export const checkedButtonProperty = new Property<RadioGroup, number>(
-  {name: "checkedButton"}
-);
-
 checkedButtonProperty.register(RadioGroup);
 
+
+// RadioButton properties
+
+export const checkedProperty = new Property<RadioButton, boolean>({
+  name: 'checked',
+  defaultValue: false,
+  valueConverter: booleanConverter
+});
+
+
+export const enabledProperty = new Property<RadioButton, boolean>({
+  name: 'enabled',
+  defaultValue: true,
+  valueConverter: booleanConverter
+});
+
+export const textProperty = new Property<RadioButton, string>({
+  name: 'text'
+});
+
+export const fillColorProperty = new CssProperty<Style, string>({
+  name: 'fillColor',
+  cssName: 'fill-color',
+  valueConverter: v => {
+    return String(v);
+  }
+});
+
+export const tintColorProperty = new CssProperty<Style, string>({
+  name: 'tintColor',
+  cssName: 'tint-color',
+  defaultValue: 'black',
+  valueConverter: v => {
+    return String(v);
+  }
+});
+
+
+// RadioButton definition
 
 export class RadioButton extends Label implements RadioButtonInterface {
     nativeViewProtected: android.widget.RadioButton;
 
     private _android: any; /// android.widget.RadioButton
-    private _fillColor: string;
     private _checkStyle: string;
     private _checkPadding: string;
     private _checkPaddingLeft: string;
@@ -172,6 +221,7 @@ export class RadioButton extends Label implements RadioButtonInterface {
     private _checkPaddingRight: string;
     private _checkPaddingBottom: string;
     private _androidViewId: number;
+    public checked: boolean;
 
     constructor() {
         super();
@@ -193,53 +243,60 @@ export class RadioButton extends Label implements RadioButtonInterface {
         this._checkStyle = style;
     }
 
-    set checkPadding(padding) {
-        this._checkPadding = padding;
-    }
-
     get checkPadding() {
         return this._checkPadding;
     }
 
-    set checkPaddingLeft(padding) {
-        this._checkPaddingLeft = padding;
+    set checkPadding(padding) {
+        this._checkPadding = padding;
     }
 
     get checkPaddingLeft() {
         return this._checkPaddingLeft;
     }
 
-
-    set checkPaddingTop(padding) {
-        this._checkPaddingTop = padding;
+    set checkPaddingLeft(padding) {
+        this._checkPaddingLeft = padding;
     }
 
     get checkPaddingTop() {
         return this._checkPaddingTop;
     }
 
-    set checkPaddingRight(padding) {
-        this._checkPaddingRight = padding;
+    set checkPaddingTop(padding) {
+        this._checkPaddingTop = padding;
     }
 
     get checkPaddingRight() {
         return this._checkPaddingRight;
     }
 
-    set checkPaddingBottom(padding) {
-        this._checkPaddingBottom = padding;
+    set checkPaddingRight(padding) {
+        this._checkPaddingRight = padding;
     }
 
     get checkPaddingBottom() {
         return this._checkPaddingBottom;
     }
 
-    get checked(): boolean {
-        return this._getValue(checkedProperty);
+    set checkPaddingBottom(padding) {
+        this._checkPaddingBottom = padding;
     }
 
-    set checked(value: boolean) {
-        this._setValue(checkedProperty, value);
+    [checkedProperty.getDefault](): boolean {
+      return false;
+    }
+
+    [checkedProperty.setNative](value: boolean) {
+      this.nativeViewProtected.setChecked(Boolean(value));
+    }
+
+    [textProperty.getDefault](): string {
+      return "";
+    }
+
+    [textProperty.setNative](value: string) {
+      this.nativeViewProtected.setText(java.lang.String.valueOf(value));
     }
 
     get enabled(): boolean {
@@ -259,23 +316,24 @@ export class RadioButton extends Label implements RadioButtonInterface {
     }
 
     get fillColor(): string {
-        return this._fillColor;
+        return (<any>this.style).fillColor;
     }
-
     set fillColor(color: string) {
-        this._fillColor = color;
-
-        if (this._android && device.sdkVersion >= "21")
-            this._android.setButtonTintList(android.content.res.ColorStateList.valueOf(new Color(this._fillColor).android));
+        (<any>this.style).fillColor = color;
+        if (this._android && device.sdkVersion >= "21") {
+            this._android.setButtonTintList(
+                android.content.res.ColorStateList.valueOf(new Color(color).android)
+            );
+        }
     }
 
-    //There is no difference between tint and fill on the android widget
+    // there is no difference between tint and fill on the android widget
     get tintColor(): string {
-        return this.fillColor;
+        return (<any>this.style).fillColor;
     }
 
     set tintColor(color: string) {
-        this.fillColor = color;
+        (<any>this.style).fillColor = color;
     }
 
     public createNativeView() {
@@ -346,91 +404,8 @@ export class RadioButton extends Label implements RadioButtonInterface {
     }
 }
 
-export const checkedProperty = new Property<RadioButton, boolean>({
-  name: 'checked',
-  defaultValue: false,
-  valueConverter: booleanConverter
-});
 checkedProperty.register(RadioButton);
-
-
-export const enabledProperty = new Property<RadioButton, boolean>({
-  name: 'enabled',
-  defaultValue: true,
-  valueConverter: booleanConverter
-});
 enabledProperty.register(RadioButton);
-
-export const textProperty = new Property<RadioButton, string>({
-  name: 'text'
-});
 textProperty.register(RadioButton);
-
-//
-// export class RadioButtonStyler implements style.Styler {
-//     private static setColorLabelProperty(view: any, newValue: any) {
-//         let cb = <android.widget.RadioButton>view._nativeView;
-//         if (cb) {
-//             (<any>cb).setTextColor(new Color(newValue).android);
-//         }
-//     }
-//
-//     // font
-//     private static setFontInternalProperty(view: any, newValue: any, nativeValue?: any) {
-//         let tv = <android.widget.RadioButton>view._nativeView;
-//         let fontValue = <Font>newValue;
-//
-//         let typeface = fontValue.getAndroidTypeface();
-//         if (typeface) {
-//             tv.setTypeface(typeface);
-//         }
-//         else {
-//             tv.setTypeface(nativeValue.typeface);
-//         }
-//
-//         if (fontValue.fontSize) {
-//             tv.setTextSize(fontValue.fontSize);
-//         }
-//         else {
-//             tv.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, nativeValue.size);
-//         }
-//     }
-//
-//     private static resetFontInternalProperty(view: any, nativeValue: any) {
-//         let tv: android.widget.RadioButton = <android.widget.RadioButton>view._nativeView;
-//         if (tv && nativeValue) {
-//             tv.setTypeface(nativeValue.typeface);
-//             tv.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, nativeValue.size);
-//         }
-//     }
-//
-//     private static getNativeFontInternalValue(view: any): any {
-//         let tv: android.widget.TextView = <android.widget.RadioButton>view._nativeView;
-//         return {
-//             typeface: tv.getTypeface(),
-//             size: tv.getTextSize()
-//         };
-//     }
-//
-//     private static resetColorProperty(view: View, nativeValue: number) {
-//         // Do nothing.
-//     }
-//
-//
-//     public static registerHandlers() {
-//         style.registerHandler(style.colorProperty, new style.StylePropertyChangedHandler(
-//             RadioButtonStyler.setColorLabelProperty,
-//             RadioButtonStyler.resetColorProperty), "RadioButton");
-//
-//         style.registerHandler(style.fontInternalProperty, new style.StylePropertyChangedHandler(
-//             RadioButtonStyler.setFontInternalProperty,
-//             RadioButtonStyler.resetFontInternalProperty,
-//             RadioButtonStyler.getNativeFontInternalValue), "RadioButton");
-//
-//         style.registerHandler(style.backgroundColorProperty, new style.StylePropertyChangedHandler(
-//             RadioButtonStyler.setColorLabelProperty,
-//             RadioButtonStyler.resetColorProperty), "RadioButton");
-//     }
-// }
-
-// RadioButtonStyler.registerHandlers();
+fillColorProperty.register(Style);
+tintColorProperty.register(Style);

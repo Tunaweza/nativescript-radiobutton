@@ -1,7 +1,8 @@
 import { RadioGroupInterface, RadioButtonInterface } from './';
-import { Property } from 'tns-core-modules/ui/core/view';
+import { CssProperty, Property, Style } from 'tns-core-modules/ui/core/view';
 import { StackLayout } from 'tns-core-modules/ui/layouts/stack-layout';
 import { Label } from 'tns-core-modules/ui/label';
+export declare const checkedButtonProperty: Property<RadioGroup, number>;
 export declare class RadioGroup extends StackLayout implements RadioGroupInterface {
     nativeViewProtected: android.widget.RadioGroup;
     static selectedEvent: string;
@@ -19,11 +20,14 @@ export declare class RadioGroup extends StackLayout implements RadioGroupInterfa
     initNativeView(): void;
     disposeNativeView(): void;
 }
-export declare const checkedButtonProperty: Property<RadioGroup, number>;
+export declare const checkedProperty: Property<RadioButton, boolean>;
+export declare const enabledProperty: Property<RadioButton, boolean>;
+export declare const textProperty: Property<RadioButton, string>;
+export declare const fillColorProperty: CssProperty<Style, string>;
+export declare const tintColorProperty: CssProperty<Style, string>;
 export declare class RadioButton extends Label implements RadioButtonInterface {
     nativeViewProtected: android.widget.RadioButton;
     private _android;
-    private _fillColor;
     private _checkStyle;
     private _checkPadding;
     private _checkPaddingLeft;
@@ -31,6 +35,7 @@ export declare class RadioButton extends Label implements RadioButtonInterface {
     private _checkPaddingRight;
     private _checkPaddingBottom;
     private _androidViewId;
+    checked: boolean;
     constructor();
     readonly android: any;
     readonly nativeView: any;
@@ -40,7 +45,6 @@ export declare class RadioButton extends Label implements RadioButtonInterface {
     checkPaddingTop: string;
     checkPaddingRight: string;
     checkPaddingBottom: string;
-    checked: boolean;
     enabled: boolean;
     text: string;
     fillColor: string;
@@ -48,6 +52,3 @@ export declare class RadioButton extends Label implements RadioButtonInterface {
     createNativeView(): any;
     toggle(): void;
 }
-export declare const checkedProperty: Property<RadioButton, boolean>;
-export declare const enabledProperty: Property<RadioButton, boolean>;
-export declare const textProperty: Property<RadioButton, string>;

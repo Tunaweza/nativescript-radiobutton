@@ -5,7 +5,7 @@
       <rb:RadioGroup selected="onChanged">
           <rb:RadioButton text="Option 1"></rb:RadioButton>
           <rb:RadioButton text="Option 2"></rb:RadioButton>
-          <rb:RadioButton text="Option 3"></rb:RadioButton>
+          <rb:RadioButton checked="true" text="Option 3"></rb:RadioButton>
       </rb:RadioGroup>
 
       <Label text="{{ 'Selected: ' + selectedOption }}"></Label>
