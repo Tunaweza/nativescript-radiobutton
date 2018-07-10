@@ -77,9 +77,12 @@ var RadioGroup = (function (_super) {
         var that = new WeakRef(this);
         this._android.setOnCheckedChangeListener(new android.widget.RadioGroup.OnCheckedChangeListener({
             onCheckedChanged: function (sender, checkedId) {
+                console.log('onCheckedChanged called');
                 if (this.owner) {
+                    console.log('inside if');
                     this.owner._onPropertyChangedFromNative(exports.checkedButtonProperty, checkedId);
                 }
+                console.log('finish onCheckedChanged');
             }
         }));
         if (!this._androidViewId) {

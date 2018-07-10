@@ -68,9 +68,12 @@ export class RadioGroup extends StackLayout implements RadioGroupInterface {
 
         this._android.setOnCheckedChangeListener(new android.widget.RadioGroup.OnCheckedChangeListener({
             onCheckedChanged: function (sender, checkedId: number) {
+                console.log('onCheckedChanged called')
                 if (this.owner) {
+                    console.log('inside if')
                     this.owner._onPropertyChangedFromNative(checkedButtonProperty, checkedId);
                 }
+                console.log('finish onCheckedChanged')
             }
         }));
 
