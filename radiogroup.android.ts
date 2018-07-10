@@ -9,6 +9,37 @@ import { StackLayout } from 'tns-core-modules/ui/layouts/stack-layout';
 import { Label } from 'tns-core-modules/ui/label';
 
 
+interface CheckedChangeListener {
+  new (owner: RadioGroup): android.widget.CompoundButton.OnCheckedChangeListener;
+}
+
+let CheckedChangeListener: CheckedChangeListener;
+
+function initializeCheckedChangeListener(): void {
+  if (CheckedChangeListener) {
+      return;
+  }
+
+  @Interfaces([android.widget.CompoundButton.OnCheckedChangeListener])
+  class CheckedChangeListenerImpl extends java.lang.Object implements android.widget.CompoundButton.OnCheckedChangeListener {
+      constructor(private owner: RadioGroup) {
+          super();
+          return global.__native(this);
+      }
+
+      onCheckedChanged(buttonView: android.widget.CompoundButton, isChecked: boolean) {
+        console.log(`onCheckedChanged called ${isChecked}`)
+        if (this.owner) {
+            console.log('inside if');
+            checkedButtonProperty.nativeValueChange(this.owner, isChecked);
+        }
+        console.log('finish onCheckedChanged')
+      }
+  }
+  CheckedChangeListener = CheckedChangeListenerImpl;
+}
+
+
 export class RadioGroup extends StackLayout implements RadioGroupInterface {
     nativeViewProtected: android.widget.RadioGroup;
 
@@ -62,26 +93,29 @@ export class RadioGroup extends StackLayout implements RadioGroupInterface {
     public createNativeView() {
         console.log('Calling RadioGroup.createNativeView')
 
-        this._android = new android.widget.RadioGroup(this._context, null);
+        this._android = new android.widget.RadioGroup(this._context);
 
-        let that = new WeakRef(this);
-
-        this._android.setOnCheckedChangeListener(new android.widget.RadioGroup.OnCheckedChangeListener({
-            onCheckedChanged: function (sender, checkedId: number) {
-                console.log('onCheckedChanged called')
-                if (this.owner) {
-                    console.log('inside if')
-                    this.owner._onPropertyChangedFromNative(checkedButtonProperty, checkedId);
-                }
-                console.log('finish onCheckedChanged')
-            }
-        }));
+        const listener = new CheckedChangeListener(this);
+        this._android.setOnCheckedChangeListener(listener);
+        (<any>this._android).listener = listener;
 
         if (!this._androidViewId) {
             this._androidViewId = android.view.View.generateViewId();
         }
         this._android.setId(this._androidViewId);
         return this._android;
+    }
+
+    public initNativeView(): void {
+        super.initNativeView();
+        const nativeView: any = this.nativeViewProtected;
+        nativeView.listener.owner = this;
+    }
+
+    public disposeNativeView() {
+        const nativeView: any = this.nativeViewProtected;
+        nativeView.listener.owner = null;
+        super.disposeNativeView();
     }
 }
 
