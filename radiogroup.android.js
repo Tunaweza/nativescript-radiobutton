@@ -71,7 +71,7 @@ var RadioGroup = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    RadioGroup.prototype._createUI = function () {
+    RadioGroup.prototype._createNativeView = function () {
         this._android = new android.widget.RadioGroup(this._context, null);
         var that = new WeakRef(this);
         this._android.setOnCheckedChangeListener(new android.widget.RadioGroup.OnCheckedChangeListener({
@@ -225,7 +225,7 @@ var RadioButton = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    RadioButton.prototype._createUI = function () {
+    RadioButton.prototype._createNativeView = function () {
         this._android = new android.widget.RadioButton(this._context, null);
         if (this.checkPaddingLeft) {
             this._android.setPadding(parseInt(this.checkPaddingLeft), this._android.getPaddingTop(), this._android.getPaddingRight(), this._android.getPaddingBottom());

@@ -13,7 +13,7 @@ export declare class RadioGroup extends StackLayout implements RadioGroupInterfa
     checkedButton: number;
     fillColor: string;
     tintColor: string;
-    _createUI(): void;
+    _createNativeView(): void;
 }
 export declare const checkedButtonProperty: Property<RadioGroup, number>;
 export declare class RadioButton extends Label implements RadioButtonInterface {
@@ -39,7 +39,7 @@ export declare class RadioButton extends Label implements RadioButtonInterface {
     text: string;
     fillColor: string;
     tintColor: string;
-    _createUI(): void;
+    _createNativeView(): void;
     toggle(): void;
 }
 export declare const checkedProperty: Property<RadioButton, boolean>;
