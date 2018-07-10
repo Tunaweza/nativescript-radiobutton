@@ -60,7 +60,7 @@ export class RadioGroup extends StackLayout implements RadioGroupInterface {
     }
 
     public createNativeView() {
-        console.log('Calling createNativeView')
+        console.log('Calling RadioGroup.createNativeView')
 
         this._android = new android.widget.RadioGroup(this._context, null);
 
@@ -78,6 +78,7 @@ export class RadioGroup extends StackLayout implements RadioGroupInterface {
             this._androidViewId = android.view.View.generateViewId();
         }
         this._android.setId(this._androidViewId);
+        return this._android;
     }
 }
 
@@ -207,7 +208,7 @@ export class RadioButton extends Label implements RadioButtonInterface {
     }
 
     public createNativeView() {
-        console.log('Calling createNativeView')
+        console.log('Calling RadioButton.createNativeView')
         // this._android = new android.widget.RadioButton(this._context, null);
         this._android = new android.widget.RadioButton(this._context, null);
 
@@ -278,7 +279,8 @@ export class RadioButton extends Label implements RadioButtonInterface {
                 }
             }
         }));
-
+        console.log('end of createNativeView')
+        return this._android;
     }
 
     public toggle(): void {

@@ -72,7 +72,7 @@ var RadioGroup = (function (_super) {
         configurable: true
     });
     RadioGroup.prototype.createNativeView = function () {
-        console.log('Calling createNativeView');
+        console.log('Calling RadioGroup.createNativeView');
         this._android = new android.widget.RadioGroup(this._context, null);
         var that = new WeakRef(this);
         this._android.setOnCheckedChangeListener(new android.widget.RadioGroup.OnCheckedChangeListener({
@@ -86,6 +86,7 @@ var RadioGroup = (function (_super) {
             this._androidViewId = android.view.View.generateViewId();
         }
         this._android.setId(this._androidViewId);
+        return this._android;
     };
     return RadioGroup;
 }(stack_layout_1.StackLayout));
@@ -227,7 +228,7 @@ var RadioButton = (function (_super) {
         configurable: true
     });
     RadioButton.prototype.createNativeView = function () {
-        console.log('Calling createNativeView');
+        console.log('Calling RadioButton.createNativeView');
         this._android = new android.widget.RadioButton(this._context, null);
         if (this.checkPaddingLeft) {
             this._android.setPadding(parseInt(this.checkPaddingLeft), this._android.getPaddingTop(), this._android.getPaddingRight(), this._android.getPaddingBottom());
@@ -284,6 +285,8 @@ var RadioButton = (function (_super) {
                 }
             }
         }));
+        console.log('end of createNativeView');
+        return this._android;
     };
     RadioButton.prototype.toggle = function () {
         this._android.toggle();
