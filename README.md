@@ -17,7 +17,11 @@ From your command prompt/terminal go to your app's root folder and execute:
 
 
 
-## Useage
+## Usage
+
+### Demo App
+
+If you want a quickstart, clone the repo, `cd src`, and `npm run demo.android`.
 
 ### Angular
 
