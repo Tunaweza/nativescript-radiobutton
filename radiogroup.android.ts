@@ -59,8 +59,8 @@ export class RadioGroup extends StackLayout implements RadioGroupInterface {
         this.fillColor = color;
     }
 
-    public _createNativeView() {
-        console.log('Calling _createNativeView')
+    public createNativeView() {
+        console.log('Calling createNativeView')
 
         this._android = new android.widget.RadioGroup(this._context, null);
 
@@ -206,8 +206,8 @@ export class RadioButton extends Label implements RadioButtonInterface {
         this.fillColor = color;
     }
 
-    public _createNativeView() {
-        console.log('Calling _createNativeView')
+    public createNativeView() {
+        console.log('Calling createNativeView')
         // this._android = new android.widget.RadioButton(this._context, null);
         this._android = new android.widget.RadioButton(this._context, null);
 
