@@ -1,5 +1,4 @@
-﻿*.js
-*.js.map
+﻿*.js.map
 *.log
 !index.d.ts
 node_modules

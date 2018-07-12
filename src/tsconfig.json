@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "declaration": true,
+    "noImplicitAny": false,
+    "removeComments": true,
+    "noLib": false,
+    "lib": ["es5", "es6", "dom"],
+    "preserveConstEnums": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
+  },
+  "exclude": [
+    "node_modules",
+    "platforms",
+    "**/*.aot.ts"
+  ],
+  "compileOnSave": false,
+  "angularCompilerOptions": {
+    "genDir": ".",
+    "skipMetadataEmit": false,
+    "skipTemplateCodegen": true,
+    "debug": true
+  }
+
+}

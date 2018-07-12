@@ -1,0 +1,14 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded" class="page"
+  xmlns:rb="nativescript-radiobutton">
+  <StackLayout class="p-20">
+    <StackLayout>
+      <rb:RadioGroup selected="onChanged">
+          <rb:RadioButton text="Option 1"></rb:RadioButton>
+          <rb:RadioButton text="Option 2"></rb:RadioButton>
+          <rb:RadioButton checked="true" text="Option 3"></rb:RadioButton>
+      </rb:RadioGroup>
+
+      <Label text="{{ 'Selected: ' + selectedOption }}"></Label>
+    </StackLayout>
+  </StackLayout>
+</Page>
