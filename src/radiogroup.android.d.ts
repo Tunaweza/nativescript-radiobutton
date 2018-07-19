@@ -2,20 +2,17 @@ import { RadioGroupInterface, RadioButtonInterface } from './';
 import { CssProperty, Property, Style } from 'tns-core-modules/ui/core/view';
 import { StackLayout } from 'tns-core-modules/ui/layouts/stack-layout';
 import { Label } from 'tns-core-modules/ui/label';
+export declare const colorProperty: CssProperty<Style, string>;
 export declare const checkedButtonProperty: Property<RadioGroup, number>;
 export declare class RadioGroup extends StackLayout implements RadioGroupInterface {
     nativeViewProtected: android.widget.RadioGroup;
     static selectedEvent: string;
     private _android;
-    _fillColor: string;
-    _tintColor: string;
     private _androidViewId;
     constructor();
     readonly android: any;
     readonly nativeView: any;
     checkedButton: number;
-    fillColor: string;
-    tintColor: string;
     createNativeView(): any;
     initNativeView(): void;
     disposeNativeView(): void;
@@ -23,8 +20,6 @@ export declare class RadioGroup extends StackLayout implements RadioGroupInterfa
 export declare const checkedProperty: Property<RadioButton, boolean>;
 export declare const enabledProperty: Property<RadioButton, boolean>;
 export declare const textProperty: Property<RadioButton, string>;
-export declare const fillColorProperty: CssProperty<Style, string>;
-export declare const tintColorProperty: CssProperty<Style, string>;
 export declare class RadioButton extends Label implements RadioButtonInterface {
     nativeViewProtected: android.widget.RadioButton;
     private _android;
@@ -47,8 +42,6 @@ export declare class RadioButton extends Label implements RadioButtonInterface {
     checkPaddingBottom: string;
     enabled: boolean;
     text: string;
-    fillColor: string;
-    tintColor: string;
     createNativeView(): any;
     toggle(): void;
 }

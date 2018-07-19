@@ -79,6 +79,14 @@ function initializeButtonCheckedChangeListener(): void {
   ButtonCheckedChangeListener = ButtonCheckedChangeListenerImpl as any;
 }
 
+// Common properties (for both RadioGroup and RadioButton)
+export const colorProperty = new CssProperty<Style, string>({
+  name: 'color',
+  cssName: 'color',
+  valueConverter: v => {
+    return String(v);
+  }
+});
 
 // RadioGroup properties
 
@@ -95,8 +103,6 @@ export class RadioGroup extends StackLayout implements RadioGroupInterface {
   public static selectedEvent = 'selected';
 
   private _android: any; /// android.widget.RadioGroup
-  public _fillColor: string;
-  public _tintColor: string;
   private _androidViewId: number;
 
   constructor() {
@@ -117,26 +123,6 @@ export class RadioGroup extends StackLayout implements RadioGroupInterface {
 
   set checkedButton(value: number) {
     this._setValue(checkedButtonProperty, value);
-  }
-
-  get fillColor(): string {
-    return this._fillColor;
-  }
-
-  set fillColor(color: string) {
-    this._fillColor = color;
-
-    if (this._android && device.sdkVersion >= "21")
-      this._android.setButtonTintList(android.content.res.ColorStateList.valueOf(new Color(this._fillColor).android));
-  }
-
-  //There is no difference between tint and fill on the android widget
-  get tintColor(): string {
-    return this.fillColor;
-  }
-
-  set tintColor(color: string) {
-    this.fillColor = color;
   }
 
   public createNativeView() {
@@ -188,23 +174,6 @@ export const enabledProperty = new Property<RadioButton, boolean>({
 
 export const textProperty = new Property<RadioButton, string>({
   name: 'text'
-});
-
-export const fillColorProperty = new CssProperty<Style, string>({
-  name: 'fillColor',
-  cssName: 'fill-color',
-  valueConverter: v => {
-    return String(v);
-  }
-});
-
-export const tintColorProperty = new CssProperty<Style, string>({
-  name: 'tintColor',
-  cssName: 'tint-color',
-  defaultValue: 'black',
-  valueConverter: v => {
-    return String(v);
-  }
 });
 
 
@@ -315,26 +284,18 @@ export class RadioButton extends Label implements RadioButtonInterface {
     this._setValue(textProperty, value);
   }
 
-  get fillColor(): string {
-    return (<any>this.style).fillColor;
+  [colorProperty.getDefault](): Color {
+    return undefined;
   }
 
-  set fillColor(color: string) {
-    (<any>this.style).fillColor = color;
-    if (this._android && device.sdkVersion >= "21") {
-      this._android.setButtonTintList(
-        android.content.res.ColorStateList.valueOf(new Color(color).android)
-      );
+  [colorProperty.setNative](value: Color) {
+    if (!this.text || !(value instanceof Color)) {
+      if (value instanceof Color) {
+          // this.nativeViewProtected.setTextColor(value.android);
+      } else {
+          // this.nativeViewProtected.setTextColor(value);
+      }
     }
-  }
-
-  // there is no difference between tint and fill on the android widget
-  get tintColor(): string {
-      return (<any>this.style).fillColor;
-  }
-
-  set tintColor(color: string) {
-      (<any>this.style).fillColor = color;
   }
 
   public createNativeView() {
@@ -408,5 +369,4 @@ export class RadioButton extends Label implements RadioButtonInterface {
 checkedProperty.register(RadioButton);
 enabledProperty.register(RadioButton);
 textProperty.register(RadioButton);
-fillColorProperty.register(Style);
-tintColorProperty.register(Style);
+colorProperty.register(Style);

@@ -32,8 +32,6 @@ export const checkedButtonProperty: Property<RadioGroup, number>;
 
 export interface RadioGroupInterface {
     checkedButton: number;
-    fillColor: string;
-    tintColor: string;
 }
 
 export declare class RadioButton extends View {
@@ -68,8 +66,5 @@ export interface RadioButtonInterface {
     text?: string;
     checked: boolean;
     enabled: boolean;
-    fillColor: string;
-    tintColor: string;
     toggle(): void;
-
 }

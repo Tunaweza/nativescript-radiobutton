@@ -21,7 +21,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var view_1 = require("tns-core-modules/ui/core/view");
 var color_1 = require("tns-core-modules/color");
-var platform_1 = require("tns-core-modules/platform");
 var stack_layout_1 = require("tns-core-modules/ui/layouts/stack-layout");
 var label_1 = require("tns-core-modules/ui/label");
 var GroupCheckedChangeListener;
@@ -81,6 +80,13 @@ function initializeButtonCheckedChangeListener() {
     }(java.lang.Object));
     ButtonCheckedChangeListener = ButtonCheckedChangeListenerImpl;
 }
+exports.colorProperty = new view_1.CssProperty({
+    name: 'color',
+    cssName: 'color',
+    valueConverter: function (v) {
+        return String(v);
+    }
+});
 exports.checkedButtonProperty = new view_1.Property({ name: 'checkedButton' });
 var RadioGroup = (function (_super) {
     __extends(RadioGroup, _super);
@@ -107,28 +113,6 @@ var RadioGroup = (function (_super) {
         },
         set: function (value) {
             this._setValue(exports.checkedButtonProperty, value);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(RadioGroup.prototype, "fillColor", {
-        get: function () {
-            return this._fillColor;
-        },
-        set: function (color) {
-            this._fillColor = color;
-            if (this._android && platform_1.device.sdkVersion >= "21")
-                this._android.setButtonTintList(android.content.res.ColorStateList.valueOf(new color_1.Color(this._fillColor).android));
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(RadioGroup.prototype, "tintColor", {
-        get: function () {
-            return this.fillColor;
-        },
-        set: function (color) {
-            this.fillColor = color;
         },
         enumerable: true,
         configurable: true
@@ -172,21 +156,6 @@ exports.enabledProperty = new view_1.Property({
 });
 exports.textProperty = new view_1.Property({
     name: 'text'
-});
-exports.fillColorProperty = new view_1.CssProperty({
-    name: 'fillColor',
-    cssName: 'fill-color',
-    valueConverter: function (v) {
-        return String(v);
-    }
-});
-exports.tintColorProperty = new view_1.CssProperty({
-    name: 'tintColor',
-    cssName: 'tint-color',
-    defaultValue: 'black',
-    valueConverter: function (v) {
-        return String(v);
-    }
 });
 var RadioButton = (function (_super) {
     __extends(RadioButton, _super);
@@ -299,29 +268,17 @@ var RadioButton = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(RadioButton.prototype, "fillColor", {
-        get: function () {
-            return this.style.fillColor;
-        },
-        set: function (color) {
-            this.style.fillColor = color;
-            if (this._android && platform_1.device.sdkVersion >= "21") {
-                this._android.setButtonTintList(android.content.res.ColorStateList.valueOf(new color_1.Color(color).android));
+    RadioButton.prototype[exports.colorProperty.getDefault] = function () {
+        return undefined;
+    };
+    RadioButton.prototype[exports.colorProperty.setNative] = function (value) {
+        if (!this.text || !(value instanceof color_1.Color)) {
+            if (value instanceof color_1.Color) {
             }
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(RadioButton.prototype, "tintColor", {
-        get: function () {
-            return this.style.fillColor;
-        },
-        set: function (color) {
-            this.style.fillColor = color;
-        },
-        enumerable: true,
-        configurable: true
-    });
+            else {
+            }
+        }
+    };
     RadioButton.prototype.createNativeView = function () {
         initializeButtonCheckedChangeListener();
         this._android = new android.widget.RadioButton(this._context, null);
@@ -381,6 +338,5 @@ exports.RadioButton = RadioButton;
 exports.checkedProperty.register(RadioButton);
 exports.enabledProperty.register(RadioButton);
 exports.textProperty.register(RadioButton);
-exports.fillColorProperty.register(view_1.Style);
-exports.tintColorProperty.register(view_1.Style);
+exports.colorProperty.register(view_1.Style);
 //# sourceMappingURL=radiogroup.android.js.map
