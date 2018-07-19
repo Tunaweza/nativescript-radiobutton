@@ -55,6 +55,29 @@ Place this in your view.
 </StackLayout>
 ```
 
+### NativeScript-Vue
+
+In your `main.js` register both `RadioGroup` and `RadioButton` elements
+
+```js
+Vue.registerElement('RadioGroup', () => require('nativescript-radiobutton').RadioGroup)
+Vue.registerElement('RadioButton', () => require('nativescript-radiobutton').RadioButton)
+```
+
+And in your template, use it
+
+```html
+<RadioGroup
+  @selected="onSelected">
+  <RadioButton
+    v-for="item in someList"
+    :key="item.id"
+    :text="item.text">
+  </RadioButton>
+</RadioGroup>
+```
+
+
 ## Supported Properties
 
 ###RadioButton
