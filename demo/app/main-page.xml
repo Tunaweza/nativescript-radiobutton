@@ -8,6 +8,18 @@
           <rb:RadioButton checked="true" text="Option 3"></rb:RadioButton>
       </rb:RadioGroup>
 
+      <rb:RadioGroup selected="onChanged" style="background-color: #dddddd">
+          <rb:RadioButton text="Option A"></rb:RadioButton>
+          <rb:RadioButton checked="true" text="Option B"></rb:RadioButton>
+          <rb:RadioButton text="Option C"></rb:RadioButton>
+      </rb:RadioGroup>
+
+      <rb:RadioGroup selected="onChanged">
+          <rb:RadioButton checked="true" color="red" text="Option A"></rb:RadioButton>
+          <rb:RadioButton text="Option B"></rb:RadioButton>
+          <rb:RadioButton color="{{ color }}" text="Option C"></rb:RadioButton>
+      </rb:RadioGroup>
+
       <Label text="{{ 'Selected: ' + selectedOption }}"></Label>
     </StackLayout>
   </StackLayout>

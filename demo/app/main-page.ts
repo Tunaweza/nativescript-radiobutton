@@ -13,9 +13,10 @@ export function pageLoaded(args: observable.EventData) {
 }
 
 export function onChanged (args: SelectedEventData): void {
-  console.log(`onChanged called. Selected: ${args}`);
+  console.log(`onChanged called. Selected: ${args.value}`);
   if(args.object.bindingContext) {
     args.object.bindingContext.set('selectedOption', args.value);
+    args.object.bindingContext.set('color', 'blue');
   }
 }
 

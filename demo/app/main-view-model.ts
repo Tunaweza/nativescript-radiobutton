@@ -5,4 +5,5 @@ declare var android: any;
 
 export class HelloWorldModel extends Observable {
   public selectedOption: string;
+  public color: string = 'red';
 }
