@@ -1,4 +1,5 @@
 import { Property, View } from 'tns-core-modules/ui/core/view';
+import { EventData } from "tns-core-modules/data/observable";
 
 export interface SelectedEventData extends EventData {
   object: any;
@@ -10,7 +11,7 @@ export interface SelectedEventData extends EventData {
  * Represents a RadioGroup component.
  */
 export declare class RadioGroup extends View {
-    public static selectedEvent = 'selected';
+    public static selectedEvent : string;
 
     /**
      * Gets the native [android widget](https://developer.android.com/reference/android/widget/RadioGroup.html) that represents the user interface for this component. Valid only when running on Android OS.

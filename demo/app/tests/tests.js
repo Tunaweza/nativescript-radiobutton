@@ -1,4 +1,4 @@
-var RadioGroup = require("nativescript-radiobutton").RadioGroup;
+var RadioGroup = require("@webileapps/nativescript-radiobutton").RadioGroup;
 var radiogroup = new RadioGroup();
 
 describe("greet function", function() {

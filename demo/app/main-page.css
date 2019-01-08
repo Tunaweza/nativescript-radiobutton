@@ -1,0 +1,6 @@
+.rgroup {
+    flex-direction: row;
+    justify-content: space-around;
+    padding-top : 20;
+    padding-bottom : 20;
+}

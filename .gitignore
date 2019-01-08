@@ -5,3 +5,7 @@ node_modules
 .idea/
 *.DS_Store
 *metadata.json
+demo/platforms
+demo/hooks
+src/*.js
+src/angular/*.js

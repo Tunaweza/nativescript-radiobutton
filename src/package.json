@@ -1,12 +1,12 @@
 {
-  "name": "nativescript-radiobutton",
-  "version": "0.2.0",
+  "name": "@webileapps/nativescript-radiobutton",
+  "version": "0.2.1",
   "main": "radiogroup",
   "author": "Tunaweza <npm@tunaweza.com> (http://tunaweza.com)",
   "license": "Apache 2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Tunaweza/nativescript-radiobutton"
+    "url": "https://github.com/WebileApps/nativescript-radiobutton"
   },
   "description": "A plugin for nativescript that exposes the radiogroup and radiobutton native view elements.",
   "nativescript": {
@@ -16,20 +16,21 @@
   },
   "scripts": {
     "tsc": "tsc -skipLibCheck",
-    "build": "npm i && tsc",
+    "build": "npm run tsc && npm run build.native",
+    "build.native": "node scripts/build-native.js",
     "postclone": "npm i && node scripts/postclone.js && cd ../demo && npm i && cd ../src && npm run plugin.link",
     "test.android": "npm i && npm run tsc && npm run tslint && cd ../demo && tns build android && tns test android --justlaunch",
     "test.ios": "npm i && npm run tsc && npm run tslint && cd ../demo && tns build ios && tns test ios --justlaunch",
     "tslint": "cd .. && tslint \"**/*.ts\" --config tslint.json --exclude \"**/node_modules/**\"",
-    "plugin.link": "npm link && cd ../demo && npm link nativescript-twilio && cd ../src",
+    "plugin.link": "npm link && cd ../demo && npm link @webileapps/nativescript-radiobutton && cd ../src",
     "plugin.tscwatch": "npm run tsc -- -w",
     "demo.ios": "npm i && npm run tsc && cd ../demo && tns run ios --syncAllFiles",
     "demo.android": "npm i && npm run tsc && cd ../demo && tns run android --syncAllFiles",
     "demo.reset": "cd ../demo && rimraf platforms",
-    "plugin.prepare": "npm run tsc && cd ../demo && tns plugin remove nativescript-twilio && tns plugin add ../src",
+    "plugin.prepare": "npm run tsc && cd ../demo && tns plugin remove @webileapps/nativescript-radiobutton && tns plugin add ../src",
     "clean": "cd ../demo && rimraf hooks node_modules platforms && cd ../src && rimraf node_modules && npm run plugin.link",
     "ci.tslint": "npm i && tslint '**/*.ts' --config '../tslint.json' --exclude '**/node_modules/**'",
-    "prepare": "node scripts/prepare.js"
+    "prepack": "npm run build.native"
   },
   "keywords": [
     "NativeScript",

@@ -3,14 +3,10 @@ import {
   booleanConverter,
   CssProperty,
   Property,
-  Style,
-  View
+  Style
 } from 'tns-core-modules/ui/core/view';
 import { Color } from 'tns-core-modules/color';
-import { isAndroid, device } from 'tns-core-modules/platform';
-import { Font } from 'tns-core-modules/ui/styling/font';
-import enums = require('tns-core-modules/ui/enums');
-import app = require('tns-core-modules/application');
+import { layout } from "tns-core-modules/utils/utils";
 import { StackLayout } from 'tns-core-modules/ui/layouts/stack-layout';
 import { Label } from 'tns-core-modules/ui/label';
 
@@ -90,7 +86,7 @@ export const colorProperty = new CssProperty<Style, string>({
 
 // RadioGroup properties
 
-export const checkedButtonProperty = new Property<RadioGroup, number>(
+export const checkedButtonProperty = new Property<RadioGroup | RadioButton, number | boolean>(
   {name: 'checkedButton'}
 );
 
@@ -301,38 +297,40 @@ export class RadioButton extends Label implements RadioButtonInterface {
   public createNativeView() {
     initializeButtonCheckedChangeListener();
 
+    const toDp = (dip) => layout.toDevicePixels(parseInt(dip));
+
     this._android = new android.widget.RadioButton(this._context, null);
 
     if (this.checkPaddingLeft) {
-      this._android.setPadding(parseInt(this.checkPaddingLeft), this._android.getPaddingTop(), this._android.getPaddingRight(), this._android.getPaddingBottom());
+      this._android.setPadding(toDp(this.checkPaddingLeft), this._android.getPaddingTop(), this._android.getPaddingRight(), this._android.getPaddingBottom());
     }
 
     if (this.checkPaddingTop) {
-      this._android.setPadding(this._android.getPaddingLeft(), parseInt(this.checkPaddingTop), this._android.getPaddingRight(), this._android.getPaddingBottom());
+      this._android.setPadding(this._android.getPaddingLeft(), toDp(this.checkPaddingTop), this._android.getPaddingRight(), this._android.getPaddingBottom());
     }
 
     if (this.checkPaddingRight) {
-      this._android.setPadding(this._android.getPaddingLeft(), this._android.getPaddingTop(), parseInt(this.checkPaddingRight), this._android.getPaddingBottom());
+      this._android.setPadding(this._android.getPaddingLeft(), this._android.getPaddingTop(), toDp(this.checkPaddingRight), this._android.getPaddingBottom());
     }
 
     if (this.checkPaddingBottom) {
-      this._android.setPadding(this._android.getPaddingLeft(), this._android.getPaddingTop(), this._android.getPaddingRight(), parseInt(this.checkPaddingBottom));
+      this._android.setPadding(this._android.getPaddingLeft(), this._android.getPaddingTop(), this._android.getPaddingRight(), toDp(this.checkPaddingBottom));
     }
 
     if (this.checkPadding) {
       let pads = this.checkPadding.toString().split(',');
       switch (pads.length) {
         case 1:
-          this._android.setPadding(parseInt(pads[0]), parseInt(pads[0]), parseInt(pads[0]), parseInt(pads[0]));
+          this._android.setPadding(toDp(pads[0]), toDp(pads[0]), toDp(pads[0]), toDp(pads[0]));
           break;
         case 2:
-          this._android.setPadding(parseInt(pads[0]), parseInt(pads[1]), parseInt(pads[0]), parseInt(pads[1]));
+          this._android.setPadding(toDp(pads[0]), toDp(pads[1]), toDp(pads[0]), toDp(pads[1]));
           break;
         case 3:
-          this._android.setPadding(parseInt(pads[0]), parseInt(pads[1]), parseInt(pads[2]), parseInt(pads[1]));
+          this._android.setPadding(toDp(pads[0]), toDp(pads[1]), toDp(pads[2]), toDp(pads[1]));
           break;
         case 4:
-          this._android.setPadding(parseInt(pads[0]), parseInt(pads[1]), parseInt(pads[2]), parseInt(pads[3]));
+          this._android.setPadding(toDp(pads[0]), toDp(pads[1]), toDp(pads[2]), toDp(pads[3]));
           break;
       }
     }

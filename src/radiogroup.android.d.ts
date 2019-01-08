@@ -3,7 +3,7 @@ import { CssProperty, Property, Style } from 'tns-core-modules/ui/core/view';
 import { StackLayout } from 'tns-core-modules/ui/layouts/stack-layout';
 import { Label } from 'tns-core-modules/ui/label';
 export declare const colorProperty: CssProperty<Style, string>;
-export declare const checkedButtonProperty: Property<RadioGroup, number>;
+export declare const checkedButtonProperty: Property<RadioGroup | RadioButton, number | boolean>;
 export declare class RadioGroup extends StackLayout implements RadioGroupInterface {
     nativeViewProtected: android.widget.RadioGroup;
     static selectedEvent: string;

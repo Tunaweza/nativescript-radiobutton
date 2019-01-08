@@ -1,17 +1,15 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded" class="page"
-  xmlns:rb="nativescript-radiobutton">
+  xmlns:rb="@webileapps/nativescript-radiobutton">
   <StackLayout class="p-20">
     <StackLayout>
-      <rb:RadioGroup selected="onChanged">
-          <rb:RadioButton text="Option 1"></rb:RadioButton>
-          <rb:RadioButton text="Option 2"></rb:RadioButton>
-          <rb:RadioButton checked="true" text="Option 3"></rb:RadioButton>
+      <rb:RadioGroup selected="onChanged" class="rgroup" orientation="horizontal">
+          <rb:RadioButton text="Full-time" checkPaddingTop="10" checkPaddingBottom="10" loaded="onLabelLoaded"></rb:RadioButton>
+          <rb:RadioButton checked="true" text="Part-time" checkPaddingTop="10" checkPaddingBottom="10" loaded="onLabelLoaded"></rb:RadioButton>
       </rb:RadioGroup>
 
-      <rb:RadioGroup selected="onChanged" style="background-color: #dddddd">
-          <rb:RadioButton text="Option A"></rb:RadioButton>
-          <rb:RadioButton checked="true" text="Option B"></rb:RadioButton>
-          <rb:RadioButton text="Option C"></rb:RadioButton>
+      <rb:RadioGroup selected="onChanged" class="rgroup" orientation="horizontal">
+          <rb:RadioButton text="Office" checkPaddingTop="20" checkPaddingBottom="20" checkPaddingRight="120"></rb:RadioButton>
+          <rb:RadioButton text="Remote (from home)" checked="true" checkPaddingRight="50" checkPaddingTop="20" checkPaddingBottom="20"></rb:RadioButton>
       </rb:RadioGroup>
 
       <rb:RadioGroup selected="onChanged">
