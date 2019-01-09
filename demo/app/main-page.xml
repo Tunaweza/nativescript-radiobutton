@@ -1,10 +1,10 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded" class="page"
-  xmlns:rb="@webileapps/nativescript-radiobutton">
+  xmlns:rb="tns_modules/@webileapps/nativescript-radiobutton">
   <StackLayout class="p-20">
     <StackLayout>
       <rb:RadioGroup selected="onChanged" class="rgroup" orientation="horizontal">
-          <rb:RadioButton text="Full-time" checkPaddingTop="10" checkPaddingBottom="10" loaded="onLabelLoaded"></rb:RadioButton>
-          <rb:RadioButton checked="true" text="Part-time" checkPaddingTop="10" checkPaddingBottom="10" loaded="onLabelLoaded"></rb:RadioButton>
+          <rb:RadioButton class="rbutton" text="Full-time" checkPaddingTop="10" checkPaddingBottom="10" loaded="onLabelLoaded"></rb:RadioButton>
+          <rb:RadioButton class="rbutton" checked="true" text="Part-time" checkPaddingTop="10" checkPaddingBottom="10" loaded="onLabelLoaded"></rb:RadioButton>
       </rb:RadioGroup>
 
       <rb:RadioGroup selected="onChanged" class="rgroup" orientation="horizontal">

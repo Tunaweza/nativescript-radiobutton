@@ -4,3 +4,7 @@
     padding-top : 20;
     padding-bottom : 20;
 }
+.rbutton {
+    tint-color : #00ff00;
+    color : orange;
+}

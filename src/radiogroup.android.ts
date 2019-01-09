@@ -1,9 +1,10 @@
 import { RadioGroupInterface, RadioButtonInterface } from './';
 import {
   booleanConverter,
+  InheritedCssProperty,
   CssProperty,
   Property,
-  Style
+  Style,
 } from 'tns-core-modules/ui/core/view';
 import { Color } from 'tns-core-modules/color';
 import { layout } from "tns-core-modules/utils/utils";
@@ -76,12 +77,12 @@ function initializeButtonCheckedChangeListener(): void {
 }
 
 // Common properties (for both RadioGroup and RadioButton)
-export const colorProperty = new CssProperty<Style, string>({
+export const colorProperty = new InheritedCssProperty<Style, Color>({
   name: 'color',
   cssName: 'color',
-  valueConverter: v => {
-    return String(v);
-  }
+  equalityComparer: Color.equals, 
+  defaultValue: new Color("blue"),
+  valueConverter: (value) => new Color(value) 
 });
 
 // RadioGroup properties
@@ -90,6 +91,13 @@ export const checkedButtonProperty = new Property<RadioGroup | RadioButton, numb
   {name: 'checkedButton'}
 );
 
+export const tintColorProperty = new InheritedCssProperty<Style, Color>({ 
+  name: "tintColor", 
+  cssName: "tint-color", 
+  equalityComparer: Color.equals, 
+  defaultValue: new Color("blue"),
+  valueConverter: (value) => new Color(value) 
+});
 
 // RadioGroup definition
 
@@ -171,7 +179,6 @@ export const enabledProperty = new Property<RadioButton, boolean>({
 export const textProperty = new Property<RadioButton, string>({
   name: 'text'
 });
-
 
 // RadioButton definition
 
@@ -285,12 +292,28 @@ export class RadioButton extends Label implements RadioButtonInterface {
   }
 
   [colorProperty.setNative](value: Color) {
-    if (!this.text || !(value instanceof Color)) {
       if (value instanceof Color) {
-          // this.nativeViewProtected.setTextColor(value.android);
+          this._android.setTextColor(value.android);
       } else {
-          // this.nativeViewProtected.setTextColor(value);
+          this._android.setTextColor(value);
       }
+  }
+
+  get tintColor(): Color {
+      return this.style.tintColor;
+  }
+  set tintColor(value: Color) {
+      this.style.tintColor = value;
+  }
+
+  [tintColorProperty.getDefault](): Color {
+    return new Color("blue");
+  }
+  [tintColorProperty.setNative](value: Color) {
+    if (value instanceof Color) {
+      setTintColor(this._android, value.android);
+    } else {
+      setTintColor(this._android, value as number);
     }
   }
 
@@ -367,4 +390,50 @@ export class RadioButton extends Label implements RadioButtonInterface {
 checkedProperty.register(RadioButton);
 enabledProperty.register(RadioButton);
 textProperty.register(RadioButton);
+tintColorProperty.register(Style);
 colorProperty.register(Style);
+
+const setTintColor = function(button /* android.widget.RadioButton  */, color: number /* @ColorInt */) : void {
+  /**
+   * Nativescript doesnot convert 2d javascript arrays to int[][]
+   * https://github.com/NativeScript/android-runtime/issues/1089
+   */
+  const states = Array.create("[I", 3);
+
+  //Not enabled
+  const state1 = Array.create("int", 1);
+  state1[0] = new java.lang.Integer(-android.R.attr.state_enabled);
+
+  //Enabled, not checked.
+  const state2 = Array.create("int", 2);
+  state2[0] = new java.lang.Integer(android.R.attr.state_enabled);
+  state2[1] = new java.lang.Integer(-android.R.attr.state_checked);
+
+  //Enabled and checked.
+  const state3 = Array.create("int", 2);
+  state3[0] = new java.lang.Integer(android.R.attr.state_enabled);
+  state3[1] = new java.lang.Integer(android.R.attr.state_checked);
+
+  states[0] = state1;
+  states[1] = state2;
+  states[2] = state3;
+
+  //Array of colors
+  const colors = Array.create("int", 3);
+  colors[0] = new Color("#dddddd").android;
+  colors[1] = new Color("#aaaaaa").android,
+  colors[2] = color;
+  const sl /* android.content.res.ColorStateList */ = new android.content.res.ColorStateList(
+    states, 
+    colors
+  );
+  if (android.os.Build.VERSION.SDK_INT >= 21 /*android.os.Build.VERSION_CODES.LOLLIPOP*/) {
+      button.setButtonTintList(sl);
+  } else {
+     let drawable /* android.graphics.drawable.Drawable */= android.support.v4.content.ContextCompat.getDrawable(button.getContext(), (android.support.design as any).R.drawable.abc_btn_radio_material);
+     drawable = android.support.v4.graphics.drawable.DrawableCompat.wrap(drawable.mutate());
+     android.support.v4.graphics.drawable.DrawableCompat.setTintMode(drawable, android.graphics.PorterDuff.Mode.SRC_IN);
+     android.support.v4.graphics.drawable.DrawableCompat.setTintList(drawable, sl);
+     button.setButtonDrawable(drawable);
+  }
+}
