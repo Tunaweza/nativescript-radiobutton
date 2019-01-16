@@ -1,6 +1,7 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded" class="page"
   xmlns:rb="tns_modules/@webileapps/nativescript-radiobutton">
   <StackLayout class="p-20">
+    <Label text="Radio button demos"></Label>
     <StackLayout>
       <rb:RadioGroup selected="onChanged" class="rgroup" orientation="horizontal">
           <rb:RadioButton class="rbutton" text="Full-time" checkPaddingTop="10" checkPaddingBottom="10" loaded="onLabelLoaded"></rb:RadioButton>

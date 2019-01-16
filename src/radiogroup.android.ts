@@ -1,4 +1,4 @@
-import { RadioGroupInterface, RadioButtonInterface } from './';
+import { RadioGroupInterface, RadioButtonInterface } from './radiogroup.common';
 import {
   booleanConverter,
   InheritedCssProperty,
@@ -391,7 +391,7 @@ checkedProperty.register(RadioButton);
 enabledProperty.register(RadioButton);
 textProperty.register(RadioButton);
 tintColorProperty.register(Style);
-colorProperty.register(Style);
+// colorProperty.register(Style);
 
 const setTintColor = function(button /* android.widget.RadioButton  */, color: number /* @ColorInt */) : void {
   /**

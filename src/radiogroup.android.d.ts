@@ -1,4 +1,4 @@
-import { RadioGroupInterface, RadioButtonInterface } from './';
+import { RadioGroupInterface, RadioButtonInterface } from './radiogroup.common';
 import { InheritedCssProperty, Property, Style } from 'tns-core-modules/ui/core/view';
 import { Color } from 'tns-core-modules/color';
 import { StackLayout } from 'tns-core-modules/ui/layouts/stack-layout';

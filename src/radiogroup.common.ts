@@ -29,8 +29,6 @@ export declare class RadioGroup extends View {
     checkedButton: number;
 }
 
-export const checkedButtonProperty: Property<RadioGroup, number>;
-
 export interface RadioGroupInterface {
     checkedButton: number;
 }
@@ -58,10 +56,6 @@ export declare class RadioButton extends View {
     toggle(): void;
 
 }
-
-export const checkedProperty: Property<RadioButton, boolean>;
-export const enabledProperty: Property<RadioButton, boolean>;
-export const textProperty: Property<RadioButton, string>;
 
 export interface RadioButtonInterface {
     text?: string;
