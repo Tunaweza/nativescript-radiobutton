@@ -2,29 +2,33 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
-    "moduleResolution": "node",
-    "sourceMap": true,
     "declaration": true,
-    "noImplicitAny": false,
     "removeComments": true,
     "noLib": false,
-    "lib": ["es5", "es6", "dom"],
-    "preserveConstEnums": true,
-    "suppressImplicitAnyIndexErrors": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "lib": ["es6", "dom"],
+    "sourceMap": true,
+    "pretty": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "noEmitHelpers": true,
+    "noEmitOnError": false,
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "noImplicitUseStrict": false,
+    "noFallthroughCasesInSwitch": true
   },
+  "include":[
+    "**/*.ts",
+    "!*.d.ts"
+  ],
   "exclude": [
-    "node_modules",
-    "platforms",
-    "**/*.aot.ts"
+      "node_modules",
+      "platforms"
   ],
   "compileOnSave": false,
   "angularCompilerOptions": {
-    "genDir": ".",
-    "skipMetadataEmit": false,
-    "skipTemplateCodegen": true,
-    "debug": true
+      "skipTemplateCodegen": true
   }
-
 }

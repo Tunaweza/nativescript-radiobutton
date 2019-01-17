@@ -1,4 +1,6 @@
 tsconfig.json
-package-lock.json
 hooks
 scripts
+*.ts
+!*.d.ts
+*.map
