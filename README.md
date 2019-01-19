@@ -59,7 +59,7 @@ Place this in your view.
 ```typescript
 export class MainComponent {
 
-    onChanged($event : SelectedEventData) : void {
+    onSelected($event : SelectedEventData) : void {
         // This will be the text of the radio button selected.
         console.log($event.value);
         // Selection 1
