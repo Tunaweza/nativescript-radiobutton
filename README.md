@@ -48,12 +48,23 @@ Place this in your view.
 
 ```xml
 <StackLayout>
-    <RadioGroup [(value)]="dataBoundVariable">
+    <RadioGroup (selected)="onSelected($event)">
         <RadioButton text="Selection 1"></RadioButton>
         <RadioButton text="Selection 2"></RadioButton>
         <RadioButton text="Selection 3"></RadioButton>
     </RadioGroup>
 </StackLayout>
+```
+
+```typescript
+export class MainComponent {
+
+    onChanged($event : SelectedEventData) : void {
+        // This will be the text of the radio button selected.
+        console.log($event.value);
+        // Selection 1
+    }
+}
 ```
 
 ### NativeScript-Vue
