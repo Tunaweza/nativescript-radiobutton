@@ -7,6 +7,9 @@ node_modules
 *metadata.json
 demo/platforms
 demo/hooks
+demo-ng/platforms
+demo-ng/hooks
+demo-ng/src/**/*.js
 src/*.js
 src/angular/*.js
 src/platforms/android/nativescript_radiobutton.aar
