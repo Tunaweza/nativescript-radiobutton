@@ -1,9 +1,11 @@
-import { RadioGroupInterface, RadioButtonInterface } from './';
-import { CssProperty, Property, Style } from 'tns-core-modules/ui/core/view';
+import { RadioGroupInterface, RadioButtonInterface } from './radiogroup.common';
+import { InheritedCssProperty, Property, Style } from 'tns-core-modules/ui/core/view';
+import { Color } from 'tns-core-modules/color';
 import { StackLayout } from 'tns-core-modules/ui/layouts/stack-layout';
 import { Label } from 'tns-core-modules/ui/label';
-export declare const colorProperty: CssProperty<Style, string>;
-export declare const checkedButtonProperty: Property<RadioGroup, number>;
+export declare const colorProperty: InheritedCssProperty<Style, Color>;
+export declare const checkedButtonProperty: Property<RadioGroup | RadioButton, number | boolean>;
+export declare const tintColorProperty: InheritedCssProperty<Style, Color>;
 export declare class RadioGroup extends StackLayout implements RadioGroupInterface {
     nativeViewProtected: android.widget.RadioGroup;
     static selectedEvent: string;
@@ -42,6 +44,7 @@ export declare class RadioButton extends Label implements RadioButtonInterface {
     checkPaddingBottom: string;
     enabled: boolean;
     text: string;
+    tintColor: Color;
     createNativeView(): any;
     toggle(): void;
 }

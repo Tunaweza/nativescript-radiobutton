@@ -2,7 +2,7 @@ import {
     Component, ChangeDetectionStrategy, ElementRef, AfterViewInit, Output, EventEmitter, Input, OnChanges,
     SimpleChanges, ApplicationRef
 } from "@angular/core";
-import { RadioButton } from '../';
+import { RadioButton } from '../radiogroup.android';
 
 
 @Component({

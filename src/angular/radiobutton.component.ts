@@ -2,7 +2,7 @@ import {
     Component, ChangeDetectionStrategy, ElementRef
 } from "@angular/core";
 
-import { RadioButton } from '../';
+import { RadioButton } from '../radiogroup.android';
 
 @Component({
     selector: "RadioButton",

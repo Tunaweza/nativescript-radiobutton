@@ -1,8 +1,11 @@
 # NativeScript-RadioButton
-[![npm](https://img.shields.io/npm/v/nativescript-radiobutton.svg)](https://www.npmjs.com/package/nativescript-radiobutton)
-[![npm](https://img.shields.io/npm/dt/nativescript-radiobutton.svg?label=npm%20downloads)](https://www.npmjs.com/package/nativescript-radiobutton)
 
-A NativeScript plugin for the native radiogroup and radiobutton widget.
+This is a fork of [other](https://www.npmjs.com/package/nativescript-radiobutton) NativeScript plugin for the native radiogroup and radiobutton widget.
+
+## Changes from the original plugin
+
+* Support for `tintColor` xml property ( or `tint-color` css property).
+* Make `color` xml (and css property) work correctly.
 
 #### Platform controls used:
 Android |   iOS
@@ -13,9 +16,7 @@ Android |   iOS
 ## Installation
 From your command prompt/terminal go to your app's root folder and execute:
 
-`tns plugin add nativescript-radiobutton`
-
-
+`tns plugin add @webileapps/nativescript-radiobutton`
 
 ## Usage
 
@@ -33,7 +34,7 @@ npm run demo.android
 Import to NgModule for use
 
 ```typescript
-import { RadioButtonModule } from 'nativescript-radiobutton/angular'
+import { RadioButtonModule } from '@webileapps/nativescript-radiobutton/angular'
 
 @NgModule({
     imports: [
@@ -45,9 +46,9 @@ import { RadioButtonModule } from 'nativescript-radiobutton/angular'
 
 Place this in your view.
 
-```html
+```xml
 <StackLayout>
-    <RadioGroup [(value)]="dataBoundVariable">
+    <RadioGroup (selected)="onSelected($event)">
         <RadioButton text="Selection 1"></RadioButton>
         <RadioButton text="Selection 2"></RadioButton>
         <RadioButton text="Selection 3"></RadioButton>
@@ -55,18 +56,29 @@ Place this in your view.
 </StackLayout>
 ```
 
+```typescript
+export class MainComponent {
+
+    onSelected($event : SelectedEventData) : void {
+        // This will be the text of the radio button selected.
+        console.log($event.value);
+        // Selection 1
+    }
+}
+```
+
 ### NativeScript-Vue
 
 In your `main.js` register both `RadioGroup` and `RadioButton` elements
 
 ```js
-Vue.registerElement('RadioGroup', () => require('nativescript-radiobutton').RadioGroup)
-Vue.registerElement('RadioButton', () => require('nativescript-radiobutton').RadioButton)
+Vue.registerElement('RadioGroup', () => require('@webileapps/nativescript-radiobutton').RadioGroup)
+Vue.registerElement('RadioButton', () => require('@webileapps/nativescript-radiobutton').RadioButton)
 ```
 
 And in your template, use it
 
-```html
+```xml
 <RadioGroup
   @selected="onSelected">
   <RadioButton
@@ -80,28 +92,21 @@ And in your template, use it
 
 ## Supported Properties
 
-###RadioButton
+### RadioButton
 Android | Example
 ---------- | ----------
 enabled | enabled="true \| false"
 text | text="a string"
 checked | checked="true \| false"
 
-###RadioGroup
+### RadioGroup
 Android | Returns
 ---------- | ----------
 value | the index of the radio button selected
 
 ## Supported Events
 
-###RadioButton
-Android | Example
----------- | ----------
-enabled | enabled="true \| false"
-text | text="a string"
-checked | checked="true \| false"
-
-###RadioGroup
+### RadioGroup
 Android | Type
 ---------- | ----------
 value | EventEmitter<number>

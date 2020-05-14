@@ -1,0 +1,6 @@
+tsconfig.json
+hooks
+scripts
+*.ts
+!*.d.ts
+*.map
